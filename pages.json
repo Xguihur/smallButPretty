@@ -1,0 +1,52 @@
+{
+	"easycom": {
+			"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
+		},
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#7A7E83",
+		"borderStyle": "white",
+		"selectedColor": "#276fff",
+		"list": [{
+				"pagePath":"pages/index/index",
+				"iconPath": "./static/tabbar/list.png",
+				"selectedIconPath": "./static/tabbar/list-m.png",
+				"text": "列表"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"iconPath": "./static/tabbar/person.png",
+				"selectedIconPath": "./static/tabbar/person-m.png",
+				"text": "我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+			"background": "#efeff4"
+		}
+	}
+}

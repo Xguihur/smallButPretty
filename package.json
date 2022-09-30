@@ -1,0 +1,17 @@
+{
+	"devDependencies": {
+		"commitizen": "^4.2.5",
+		"eslint": "^8.24.0",
+		"eslint-plugin-vue": "^9.5.1"
+	},
+	"scripts": {
+		"eslint": "eslint --init",
+		"prettier": "prettier --write .",
+		"commit": "git-cz"
+	},
+	"config": {
+		"commitizen": {
+			"path": "node_modules/cz-conventional-changelog"
+		}
+	}
+}
