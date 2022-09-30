@@ -2,6 +2,7 @@
   <view class="container">
     <view class=""> onelist </view>
 		进行一次sourcetree的测试
+		测试本地终端提交
   </view>
 </template>
 
