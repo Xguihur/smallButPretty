@@ -7,6 +7,7 @@ export default {
 		console.log('App Launch')
 	},
 	onShow: function() {
+		uni.hideTabBar()
 		console.log('App Show')
 	},
 	onHide: function() {
@@ -24,7 +25,7 @@ export default {
 @import '@/static/customicons.css';
 // 设置整个项目的背景色
 page {
-	background-color: #f5f5f5;
+	background-color: #f1f2f3;
 }
 
 /* #endif */

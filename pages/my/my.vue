@@ -13,11 +13,12 @@
 </template>
 
 <script>
-export default {
-	data() {
-		return {}
+	import tabBar from '../../component/tabBar.vue'
+	export default {
+		components:{
+			tabBar
+		}
 	}
-}
 </script>
 
 <style lang="less">
