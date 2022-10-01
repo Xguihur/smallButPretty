@@ -3,12 +3,23 @@
 			"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
 		},
 	"pages": [{
-			"path": "pages/index/index"
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
 		},
 		{
-			"path": "pages/login/login"
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false
+			}
 		}, {
-			"path": "pages/my/my"
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {
@@ -31,8 +42,9 @@
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarBackgroundColor": "#f1f2f3",
-		"backgroundColor": "#f1f2f3",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
 		"app-plus": {
 			"background": "#efeff4"
 		}
