@@ -8,14 +8,14 @@
 			<view class="search-wrap">
 				<input type="text">
 				<view class="search-title">搜索计划</view>
-				<view class="search logo"></view>
+				<image class="search logo" src="../../static/icon/搜索.svg"></image>
 			</view>
 		</view>
 		<view class="list-wrap first">
 			<view class="list-title">
 				<view class="circle"></view>
 				<view class="title">重要且紧急</view>
-				<view class="logo"></view>
+				<image class="open-icon logo" src="../../static/icon/上.svg"></image>
 			</view>
 			<view class="list-item">
 				<view class="r-wrap">
@@ -26,14 +26,15 @@
 			</view>
 			<view class="list-item done">
 				<view class="r-wrap">
-					<view class="r"></view>
+					<view class="r" v-if="!isDone"></view>
+					<image v-else class="ri logo" src="../../static/icon/对勾.svg"></image>
 				</view>
 				<text class="content">参加会议</text>
 				<text class="time">9：00~10：00</text>
 			</view>
 		</view>
 		<view class="sss">
-			
+
 		</view>
 		<view class="list-wrap second">
 			<view class="list-title">
@@ -48,9 +49,10 @@
 				<text class="content">参加会议啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</text>
 				<text class="time">9：00~10：00</text>
 			</view>
-			<view class="list-item done">
+			<view :class="{'list-item':true, 'done':isDone}">
 				<view class="r-wrap">
-					<view class="r"></view>
+					<view class="r" v-if="!isDone"></view>
+					<image v-else class="logo" src="../../static/icon/对勾.svg"></image>
 				</view>
 				<text class="content">参加会议</text>
 				<text class="time">9：00~10：00</text>
@@ -98,15 +100,20 @@
 				<text class="time">9：00~10：00</text>
 			</view>
 		</view>
+		<tab-bar current="0"></tab-bar>
 	</view>
 </template>
 
 <script>
+	import tabBar from '../../component/tabBar.vue'
 	export default {
+		components:{
+			tabBar
+		},
 		data() {
 			return {
-
-			};
+				isDone: true, //判断是否完成 暂时
+			}
 		},
 		methods: {},
 	};
@@ -117,6 +124,11 @@
 		padding: 40rpx;
 		font-size: 28rpx;
 		background-color: #f1f2f3;
+	}
+
+	.logo {
+		width: 40rpx;
+		height: 40rpx;
 	}
 
 	.tab-bar {
@@ -132,12 +144,14 @@
 				height: 55rpx;
 			}
 		}
-		text{
+
+		text {
 			color: #2643FC;
 			font-size: 40rpx;
 			line-height: 60rpx;
 			font-weight: 700;
 		}
+
 		.search-wrap {
 			flex: 2;
 			height: 60rpx;
@@ -151,7 +165,7 @@
 				margin-top: 6rpx;
 				height: 50rpx;
 				font-size: 24rpx;
-				width: 400rpx;
+				width: 300rpx;
 				position: absolute;
 			}
 
@@ -162,7 +176,13 @@
 				font-size: 24rpx;
 				line-height: 60rpx;
 				color: #9c9c9c;
-				pointer-events:none;
+				pointer-events: none;
+			}
+
+			.search {
+				position: absolute;
+				right: 20rpx;
+				top: 12rpx;
 			}
 		}
 	}
@@ -175,6 +195,7 @@
 		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
 		.list-title {
+			position: relative;
 			width: 90%;
 			margin: 0 auto;
 			height: 50rpx;
@@ -193,18 +214,25 @@
 				padding-left: 70rpx;
 				font-weight: 700;
 			}
+			.open-icon{
+				position: absolute;
+				right: 0;
+				top: 15rpx;
+			}
 		}
 
 		.list-item {
 			display: flex;
 			box-sizing: border-box;
-			padding: 25rpx 25rpx;
-			height: 80rpx;
+			padding: 25rpx;
+			height: 85rpx;
 			justify-content: space-around;
+
 			.r-wrap {
 				flex: 1;
 				padding-left: 15rpx;
 				.r {
+					margin-left: 4rpx;
 					width: 30rpx;
 					height: 30rpx;
 				}
@@ -231,13 +259,15 @@
 			&.done {
 				.r-wrap {
 					.r {
-					border: 2rpx solid #A1A1A1 !important;  	
+						border: none !important;
 					}
 				}
-				.content{
-					color:  #A1A1A1;
+
+				.content {
+					color: #A1A1A1;
 				}
-				.time{
+
+				.time {
 					color: #a1a1a1;
 				}
 			}
@@ -246,7 +276,7 @@
 		&.first {
 			.list-title {
 				.circle {
-					background-color: #df2e2e; 
+					background-color: #df2e2e;
 				}
 
 				.title {
@@ -255,7 +285,7 @@
 			}
 
 			.list-item {
-			 .r-wrap {
+				.r-wrap {
 					.r {
 						border: 2rpx solid #df2e2e;
 					}
@@ -276,45 +306,47 @@
 
 			.list-item {
 				.r-wrap {
-				 .r {
+					.r {
 						border: 2rpx solid #FFB000;
 					}
 				}
 			}
 		}
+
 		&.third {
 			.list-title {
 				.circle {
 					background-color: #4772FA;
 				}
-		
+
 				.title {
 					color: #4772FA;
 				}
 			}
-		
+
 			.list-item {
 				.r-wrap {
-				 .r {
+					.r {
 						border: 2rpx solid #4772FA;
 					}
 				}
 			}
 		}
+
 		&.fourth {
 			.list-title {
 				.circle {
 					background-color: #A3A3A3;
 				}
-		
+
 				.title {
 					color: #A3A3A3;
 				}
 			}
-		
+
 			.list-item {
 				.r-wrap {
-				 .r {
+					.r {
 						border: 2rpx solid #A3A3A3;
 					}
 				}
