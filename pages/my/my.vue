@@ -5,10 +5,20 @@
 			<view class="my-name">{{ username }}</view>
 		</view>
 		<view class="my-function">
-			<view class="my-func-item" @click="changeImg()">更换头像</view>
+			<view class="my-func-item" @click="changeImg()"><view class="my-item-content">
+					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<view class="my-text-content">
+						更换头像
+					</view>
+				</view></view>
 
 			<!-- 修改用户名 -->
-			<view class="my-func-item" @click="changeUsername()">修改用户名</view>
+			<view class="my-func-item" @click="changeUsername()"><view class="my-item-content">
+					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<view class="my-text-content">
+						修改用户名
+					</view>
+				</view></view>
 			<uni-popup ref="inputDialogUsername" type="dialog">
 				<uni-popup-dialog
 					ref="inputClose"
@@ -20,7 +30,12 @@
 				></uni-popup-dialog>
 			</uni-popup>
 			<!-- 修改密码 -->
-			<view class="my-func-item" @click="changePassword()">修改密码</view>
+			<view class="my-func-item" @click="changePassword()"><view class="my-item-content">
+					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<view class="my-text-content">
+						修改密码
+					</view>
+				</view></view>
 			<uni-popup ref="inputDialogPassword" type="dialog">
 				<uni-popup-dialog
 					ref="inputClose"
@@ -34,7 +49,12 @@
 			</uni-popup>
 
 			<!-- 使用指南 -->
-			<view class="my-func-item" @click="direction('center')">使用指南</view>
+			<view class="my-func-item" @click="direction('center')"><view class="my-item-content">
+					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<view class="my-text-content">
+						使用指南
+					</view>
+				</view></view>
 			
 			<uni-popup ref="popupDirection" background-color="#fff" @change="change">
 				<view class="popup-content">
@@ -46,7 +66,14 @@
 			</uni-popup>
 
 			<!-- 关于我们 -->
-			<view class="my-func-item" @click="aboutUs('center')">关于我们</view>
+			<view class="my-func-item" @click="aboutUs('center')">
+				<view class="my-item-content">
+					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<view class="my-text-content">
+						关于我们
+					</view>
+				</view>
+				</view>
 			<uni-popup
 				ref="popupAboutUs"
 				class="my-popup-center"
@@ -171,11 +198,22 @@ export default {
 	.my-function {
 		margin: 20rpx 0 50rpx;
 		.my-func-item {
-			text-indent: 40rpx;
+			text-indent: 20rpx;
 			width: 100%;
 			height: 80rpx;
 			line-height: 80rpx;
 			border-bottom: solid 2rpx #ccc;
+			
+			.my-item-content{
+				display: flex;
+				
+			.my-title-img{
+				width: 40rpx;
+				margin-left: 30rpx;
+				margin-top: 20rpx;
+				// margin-right: 20rpx;
+			}
+			}
 		}
 
 		.popup-content {
