@@ -6,7 +6,7 @@
 		</view>
 		<view class="my-function">
 			<view class="my-func-item" @click="changeImg()"><view class="my-item-content">
-					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<image class="my-title-img" src="../../static/icon/imglogo.svg" mode="widthFix"></image>
 					<view class="my-text-content">
 						更换头像
 					</view>
@@ -14,7 +14,7 @@
 
 			<!-- 修改用户名 -->
 			<view class="my-func-item" @click="changeUsername()"><view class="my-item-content">
-					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<image class="my-title-img" src="../../static/icon/rename.svg" mode="widthFix"></image>
 					<view class="my-text-content">
 						修改用户名
 					</view>
@@ -31,7 +31,7 @@
 			</uni-popup>
 			<!-- 修改密码 -->
 			<view class="my-func-item" @click="changePassword()"><view class="my-item-content">
-					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<image class="my-title-img" src="../../static/icon/password.svg" mode="widthFix"></image>
 					<view class="my-text-content">
 						修改密码
 					</view>
@@ -50,7 +50,7 @@
 
 			<!-- 使用指南 -->
 			<view class="my-func-item" @click="direction('center')"><view class="my-item-content">
-					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<image class="my-title-img" src="../../static/icon/direction.svg" mode="widthFix"></image>
 					<view class="my-text-content">
 						使用指南
 					</view>
@@ -68,7 +68,7 @@
 			<!-- 关于我们 -->
 			<view class="my-func-item" @click="aboutUs('center')">
 				<view class="my-item-content">
-					<image class="my-title-img" src="../../static/icon/帮助.svg" mode="widthFix"></image>
+					<image class="my-title-img" src="../../static/icon/help.svg" mode="widthFix"></image>
 					<view class="my-text-content">
 						关于我们
 					</view>

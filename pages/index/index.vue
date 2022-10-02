@@ -8,14 +8,14 @@
 			<view class="search-wrap">
 				<input type="text">
 				<view class="search-title">搜索计划</view>
-				<image class="search logo" src="../../static/icon/搜索.svg"></image>
+				<image class="search logo" src="../../static/icon/search.svg"></image>
 			</view>
 		</view>
 		<view class="list-wrap first">
 			<view class="list-title">
 				<view class="circle"></view>
 				<view class="title">重要且紧急</view>
-				<image class="open-icon logo" src="../../static/icon/上.svg"></image>
+				<image class="open-icon logo" src="../../static/icon/up.svg"></image>
 			</view>
 			<view class="list-item">
 				<view class="r-wrap">
@@ -27,7 +27,7 @@
 			<view class="list-item done">
 				<view class="r-wrap">
 					<view class="r" v-if="!isDone"></view>
-					<image v-else class="ri logo" src="../../static/icon/对勾.svg"></image>
+					<image v-else class="ri logo" src="../../static/icon/yes.svg"></image>
 				</view>
 				<text class="content">参加会议</text>
 				<text class="time">9：00~10：00</text>
@@ -52,7 +52,7 @@
 			<view :class="{'list-item':true, 'done':isDone}">
 				<view class="r-wrap">
 					<view class="r" v-if="!isDone"></view>
-					<image v-else class="logo" src="../../static/icon/对勾.svg"></image>
+					<image v-else class="logo" src="../../static/icon/yes.svg"></image>
 				</view>
 				<text class="content">参加会议</text>
 				<text class="time">9：00~10：00</text>

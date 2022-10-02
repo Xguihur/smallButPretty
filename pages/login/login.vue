@@ -6,42 +6,84 @@
 		</view>
 		<view class="lg-state">新一代简介清单软件</view>
 		<!-- 注册 -->
-		<view class="lg-input" v-if="regOrSign===0">
-			<input
-				class="uni-input lg-inputText"
-				focus
-				placeholder="请设置您的账号"
-				v-model="number"
-			/>
-			<input
-				class="uni-input lg-inputText"
-				focus
-				placeholder="请设置您的密码"
-				v-model="password"
-				password
-				maxlength="30"
-			/>
+		<view class="lg-input" v-if="regOrSign === 0">
+			<view class="lg-input-box">
+				<image
+					class="lg-input-logo"
+					src="../../static/icon/my.svg"
+					mode="widthFix"
+				></image>
+				<text class="lg-input-text">|</text>
+				<input
+					class="uni-input lg-inputText"
+					focus
+					placeholder="请设置您的账号"
+					v-model="number"
+				/>
+			</view>
+			<view class="lg-input-box">
+				<image
+					class="lg-input-logo"
+					src="../../static/icon/lock.svg"
+					mode="widthFix"
+				></image>
+								<text class="lg-input-text">|</text>
+				<input
+					class="uni-input lg-inputText"
+					focus
+					placeholder="请设置您的密码"
+					v-model="password"
+					password
+					maxlength="30"
+				/>
+			</view>
 		</view>
 		<!-- 登录 -->
-		<view class="lg-input" v-if="regOrSign===1">
-			<input
-				class="uni-input lg-inputText"
-				focus
-				placeholder="请输入账号"
-				v-model="number"
-			/>
-			<input
-				class="uni-input lg-inputText"
-				focus
-				placeholder="请输入密码"
-				v-model="password"
-				password
-				maxlength="30"
-			/>
+		<view class="lg-input" v-if="regOrSign === 1">
+			<view class="lg-input-box">
+				<image
+					class="lg-input-logo"
+					src="../../static/icon/my.svg"
+					mode="widthFix"
+				></image>
+				<text class="lg-input-text">|</text>
+				<input
+					class="uni-input lg-inputText"
+					focus
+					placeholder="请输入账号"
+					v-model="number"
+				/>
+			</view>
+			<view class="lg-input-box">
+				<image
+					class="lg-input-logo"
+					src="../../static/icon/lock.svg"
+					mode="widthFix"
+				></image>
+								<text class="lg-input-text">|</text>
+				<input
+					class="uni-input lg-inputText"
+					focus
+					placeholder="请输入密码"
+					v-model="password"
+					password
+					maxlength="30"
+				/>
+			</view>
 		</view>
 		<view class="lg-button">
-			<button type="primary" :class="regOrSign===0?'lg-button-active':''" @click="register()">注册</button>
-			<button type="primary" :class="regOrSign===1?'lg-button-active':''" @click="signIn()">
+			<button
+				type="primary"
+				:class="regOrSign === 0 ? 'lg-button-active' : ''"
+				@click="register()"
+			>
+				注册
+			</button>
+			<button
+				type="primary"
+				:class="regOrSign === 1 ? 'lg-button-active' : ''"
+				@click="signIn()"
+			>
 				登录
 			</button>
 		</view>
@@ -110,14 +152,32 @@ export default {
 	}
 	.lg-input {
 		margin-bottom: 100rpx;
-		.lg-inputText {
-			border-radius: 50rpx;
-			margin-bottom: 70rpx;
-		}
-		.uni-input {
-			padding: 20rpx 30rpx;
-			border: solid 2rpx #ddd;
-			background-color: #fff;
+		margin-left: 20rpx;
+
+		.lg-input-box {
+			display: flex;
+			.lg-input-text{
+				position: relative;
+				left: 88rpx;
+				top: 20rpx;
+				color: #ccc;
+				font-size: 38rpx;
+			}
+			.lg-input-logo {
+				width: 45rpx;
+				margin-top: 24rpx;
+				margin-right: -78rpx;
+			}
+			.lg-inputText {
+				border-radius: 50rpx;
+				margin-bottom: 70rpx;
+			}
+			.uni-input {
+				flex: 1;
+				padding: 20rpx 30rpx 20rpx 98rpx;
+				border: solid 2rpx #ddd;
+				background-color: #fff;
+			}
 		}
 	}
 	.lg-button {
