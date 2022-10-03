@@ -2,7 +2,6 @@
 	<view class="container">
 		<view class="tab-bar">
 			<view class="logo-wrap">
-				<!-- <image src="../../static/logo.png" mode="" class="one-list"></image> -->
 				<text>OneList</text>
 			</view>
 			<view class="search-wrap">
@@ -33,13 +32,11 @@
 				<text class="time">9：00~10：00</text>
 			</view>
 		</view>
-		<view class="sss">
-
-		</view>
 		<view class="list-wrap second">
 			<view class="list-title">
 				<view class="circle"></view>
 				<view class="title">重要但不紧急</view>
+					<image class="open-icon logo" src="../../static/icon/up.svg"></image>
 				<view class="logo"></view>
 			</view>
 			<view class="list-item">
@@ -61,7 +58,8 @@
 		<view class="list-wrap third">
 			<view class="list-title">
 				<view class="circle"></view>
-				<view class="title">重要且紧急</view>
+				<view class="title">不重要但紧急</view>
+					<image class="open-icon logo" src="../../static/icon/up.svg"></image>
 				<view class="logo"></view>
 			</view>
 			<view class="list-item">
@@ -82,30 +80,18 @@
 		<view class="list-wrap fourth">
 			<view class="list-title">
 				<view class="circle"></view>
-				<view class="title">重要且紧急</view>
+				<view class="title">不重要不紧急</view>
+				<image class="open-icon logo" src="../../static/icon/up.svg"></image>
 				<view class="logo"></view>
 			</view>
-			<view class="list-item">
-				<view class="r-wrap">
-					<view class="r"></view>
-				</view>
-				<text class="content">参加会议啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</text>
-				<text class="time">9：00~10：00</text>
-			</view>
-			<view class="list-item done">
-				<view class="r-wrap">
-					<view class="r"></view>
-				</view>
-				<text class="content">参加会议</text>
-				<text class="time">9：00~10：00</text>
-			</view>
 		</view>
-		<tab-bar current="0"></tab-bar>
+		<tab-bar :current="0"></tab-bar>
 	</view>
 </template>
 
 <script>
-	import tabBar from '../../component/tabBar.vue'
+	import tabBar from '../../component/tabBar.vue';
+    import requests from "../../api/request.js"
 	export default {
 		components:{
 			tabBar
@@ -115,7 +101,24 @@
 				isDone: true, //判断是否完成 暂时
 			}
 		},
-		methods: {},
+		mounted() {
+			this.getList()
+		},
+		methods: {
+			// 发送请求
+			getList(){
+				const res = () => {
+				  return requests({
+				    url: "/user/daylist",
+				    method: 'GET',
+					data:{
+						token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjQ4IiwiZXhwIjoxNjY1Mzk5MTg1LCJ1c2VybmFtZSI6Iua1i-ivleWRmCJ9.daCr58yKYiGxZvTKaYBi1BGQ6vSMk2lNOb_L2QN6doA"
+					}
+				  })
+				}
+				console.log(res);
+			}
+		},
 	};
 </script>
 

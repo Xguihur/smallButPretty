@@ -90,19 +90,20 @@
 		</view>
 
 		<button type="warn" @click="signOut()">登出</button>
+		<tab-bar :current="1"></tab-bar>
 	</view>
 </template>
 
 <script>
-// import tabBar from '../../component/tabBar.vue'
+import tabBar from '../../component/tabBar.vue'
 export default {
 	data() {
 		return {
-			username: '用户名'
+			username: '用户名',
 		}
 	},
 	components: {
-		// tabBar
+		tabBar
 	},
 	methods: {
 		// 登出
@@ -177,8 +178,9 @@ export default {
 		change(e) {
 			console.log('当前模式：' + e.type + ',状态：' + e.show)
 		}
-	}
+	},
 }
+
 </script>
 
 <style lang="less">

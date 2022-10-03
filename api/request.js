@@ -1,7 +1,7 @@
 import axios from 'axios'
 const requests = axios.create({
 
-	baseURL: ''
+	baseURL: "http://8.130.38.74:6661",
 	// 代表请求超时的时间为5s
 	timeout: 5000
 })
