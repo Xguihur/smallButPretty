@@ -27,7 +27,7 @@
 					src="../../static/icon/lock.svg"
 					mode="widthFix"
 				></image>
-								<text class="lg-input-text">|</text>
+				<text class="lg-input-text">|</text>
 				<input
 					class="uni-input lg-inputText"
 					focus
@@ -60,7 +60,7 @@
 					src="../../static/icon/lock.svg"
 					mode="widthFix"
 				></image>
-								<text class="lg-input-text">|</text>
+				<text class="lg-input-text">|</text>
 				<input
 					class="uni-input lg-inputText"
 					focus
@@ -91,6 +91,8 @@
 </template>
 
 <script>
+import { reqRegister } from '../../api/index.js'
+import { reqLogin } from '../../api/index.js'
 export default {
 	data() {
 		return {
@@ -99,28 +101,93 @@ export default {
 			regOrSign: 1
 		}
 	},
+	created() {
+		const myToken = uni.getStorageSync('token')
+		if (myToken !== null && myToken !== '' && myToken !== undefined) {
+			// 执行token验证是否过期接口,来判断是免登录还是重新登陆
+			console.log("进入了登录注册页面,但是未验证token")
+		}
+	},
 	methods: {
 		register() {
-			// 无论是切换标签还是注册都清空
-			this.number = ''
-			this.password = ''
 			if (this.regOrSign === 1) {
 				this.regOrSign = 0
 			} else {
 				console.log('注册')
+				let registerForm = {}
+				registerForm.username = this.number
+				registerForm.password = this.password
+				console.log(registerForm)
+				// 执行接口
+				reqRegister(registerForm).then(res => {
+					// console.log(res)
+					if (res) {
+						if (res.status === 200) {
+							if (res.data.state) {
+								// 注册成功
+								uni.showToast({
+									icon: 'success',
+									title: res.data.msg
+								})
+								this.regOrSign = 1
+							} else {
+								// 注册失败
+								uni.showToast({
+									icon: 'error',
+									title: res.data.msg
+								})
+							}
+						} else {
+							console.log('res.status:', res.status)
+						}
+					} else {
+						console.log('res不存在')
+					}
+				})
 			}
-		},
-		signIn() {
-			// 无论是切换标签还是登录都清空
+			// 无论是切换标签还是注册都清空
 			this.number = ''
 			this.password = ''
+		},
+		signIn() {
 			if (this.regOrSign === 0) {
 				this.regOrSign = 1
 			} else {
 				console.log('登录')
-				console.log('number:', this.number)
-				console.log('password:', this.password)
+				let loginForm = {}
+				loginForm.username = this.number
+				loginForm.password = this.password
+				console.log(loginForm)
+				// 执行接口
+				reqLogin(loginForm).then(res => {
+					// console.log(res)
+					if (res) {
+						if (res.status === 200) {
+							let token = res.data.token
+							console.log(token)
+							if (token !== '' && token !== null && token !== undefined) {
+								uni.setStorageSync('token', token)
+								uni.switchTab({
+									url: '/pages/index/index'
+								})
+							} else {
+								console.log(res.data.msg)
+								uni.showToast({
+									icon: 'error',
+									title: res.data.msg
+								})
+							}
+						} else {
+							console.log('res.status:', res.status)
+						}
+					} else {
+						console.log('找不到res')
+					}
+				})
 			}
+			// 无论是切换标签还是登录都清空
+			this.number = ''
+			this.password = ''
 		}
 	}
 }
@@ -156,7 +223,7 @@ export default {
 
 		.lg-input-box {
 			display: flex;
-			.lg-input-text{
+			.lg-input-text {
 				position: relative;
 				left: 88rpx;
 				top: 20rpx;

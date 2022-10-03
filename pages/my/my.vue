@@ -95,6 +95,7 @@
 </template>
 
 <script>
+	import {reqShowMsg} from "../../api/index.js"
 import tabBar from '../../component/tabBar.vue'
 export default {
 	data() {
@@ -166,6 +167,11 @@ export default {
 
 		// 使用指南
 		direction(type) {
+			// 测试查看个人信息的接口
+			reqShowMsg().then(res=>{
+				console.log(res)
+			})
+			
 			console.log('使用指南')
 			this.$refs.popupDirection.open(type)
 		},
