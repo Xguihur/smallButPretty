@@ -80,13 +80,13 @@
 					position: 'bottom',
 					list: [{
 							pagePath: 'pages/index/index',
-							iconPath: '../../static/tabbar/list.png',
-							selectedIconPath: '../../static/tabbar/list-m.png'
+							iconPath: '/static/tabbar/list.png',
+							selectedIconPath: '/static/tabbar/list-m.png'
 						},
 						{
 							pagePath: 'pages/my/my',
-							iconPath: '../../static/tabbar/my.png',
-							selectedIconPath: '../../static/tabbar/my-m.png'
+							iconPath: '/static/tabbar/my.png',
+							selectedIconPath: '/static/tabbar/my-m.png'
 						}
 					]
 				},

@@ -1,0 +1,27 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/my/my"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#f1f2f3",
+    "backgroundColor": "#f1f2f3"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "borderStyle": "white",
+    "selectedColor": "#276fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index"
+      },
+      {
+        "pagePath": "pages/my/my"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

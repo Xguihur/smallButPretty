@@ -1,0 +1,46 @@
+.my-container {
+  padding: 40rpx;
+}
+.my-container .my-top {
+  height: 150rpx;
+  display: flex;
+  align-items: center;
+}
+.my-container .my-top .my-img {
+  width: 100rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+}
+.my-container .my-function {
+  margin: 20rpx 0 50rpx;
+}
+.my-container .my-function .my-func-item {
+  text-indent: 20rpx;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: solid 2rpx #ccc;
+}
+.my-container .my-function .my-func-item .my-item-content {
+  display: flex;
+}
+.my-container .my-function .my-func-item .my-item-content .my-title-img {
+  width: 40rpx;
+  margin-left: 30rpx;
+  margin-top: 20rpx;
+}
+.my-container .my-function .popup-content {
+  width: 75vw;
+  padding: 30rpx;
+  font-size: 30rpx;
+  min-height: 300rpx;
+  max-height: 1000rpx;
+  overflow: auto;
+}
+.my-container .my-function .popup-content .my-popup-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+

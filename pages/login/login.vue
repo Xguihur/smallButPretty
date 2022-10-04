@@ -107,15 +107,15 @@ export default {
 			// 执行token验证是否过期接口,来判断是免登录还是重新登陆
 			// 现在只进行了验证存在token就自动登录
 			uni.showToast({
-				icon:'success',
-				title:'正在进行登录...'
+				icon: 'success',
+				title: '正在进行登录...'
 			})
-			setTimeout(()=>{
+			setTimeout(() => {
 				uni.switchTab({
 					url: '/pages/index/index'
 				})
-			},1500)
-			console.log("进入了登录注册页面,但是未验证token")
+			}, 1500)
+			console.log('进入了登录注册页面,但是未验证token')
 		}
 	},
 	methods: {
@@ -129,30 +129,54 @@ export default {
 				registerForm.password = this.password
 				console.log(registerForm)
 				// 执行接口
+				// reqRegister(registerForm).then(res => {
+				// 	// console.log(res)
+				// 	if (res) {
+				// 		if (res.status === 200) {
+				// 			if (res.data.state) {
+				// 				// 注册成功
+				// 				uni.showToast({
+				// 					icon: 'success',
+				// 					title: res.data.msg
+				// 				})
+				// 				this.regOrSign = 1
+				// 			} else {
+				// 				// 注册失败
+				// 				uni.showToast({
+				// 					icon: 'error',
+				// 					title: res.data.msg
+				// 				})
+				// 			}
+				// 		} else {
+				// 			console.log('res.status:', res.status)
+				// 		}
+				// 	} else {
+				// 		console.log('res不存在')
+				// 	}
+				// })
 				reqRegister(registerForm).then(res => {
-					// console.log(res)
-					if (res) {
-						if (res.status === 200) {
-							if (res.data.state) {
-								// 注册成功
-								uni.showToast({
-									icon: 'success',
-									title: res.data.msg
-								})
-								this.regOrSign = 1
+						if (res) {
+							if (res.statusCode === 200) {
+								if (res.data.state) {
+									// 注册成功
+									uni.showToast({
+										icon: 'success',
+										title: res.data.msg
+									})
+									this.regOrSign = 1
+								} else {
+									// 注册失败
+									uni.showToast({
+										icon: 'error',
+										title: res.data.msg
+									})
+								}
 							} else {
-								// 注册失败
-								uni.showToast({
-									icon: 'error',
-									title: res.data.msg
-								})
+								console.log('res.statusCode:', res.statusCode)
 							}
 						} else {
-							console.log('res.status:', res.status)
+							console.log('res不存在')
 						}
-					} else {
-						console.log('res不存在')
-					}
 				})
 			}
 			// 无论是切换标签还是注册都清空
@@ -169,30 +193,36 @@ export default {
 				loginForm.password = this.password
 				console.log(loginForm)
 				// 执行接口
-				reqLogin(loginForm).then(res => {
-					// console.log(res)
-					if (res) {
-						if (res.status === 200) {
-							let token = res.data.token
-							console.log(token)
-							if (token !== '' && token !== null && token !== undefined) {
-								uni.setStorageSync('token', token)
-								uni.switchTab({
-									url: '/pages/index/index'
-								})
+				reqLogin(loginForm).then(res=>{
+						if (res) {
+							console.log(res)
+							if (res.statusCode === 200) {
+								let token = res.data.token
+								console.log(token)
+								if (token !== '' && token !== null && token !== undefined) {
+									uni.setStorageSync('token', token)
+									uni.showToast({
+										icon: 'success',
+										title: '登录成功！'
+									})
+									setTimeout(() => {
+										uni.switchTab({
+											url: '/pages/index/index'
+										})
+									}, 1000)
+								} else {
+									console.log(res.data.msg)
+									uni.showToast({
+										icon: 'error',
+										title: res.data.msg
+									})
+								}
 							} else {
-								console.log(res.data.msg)
-								uni.showToast({
-									icon: 'error',
-									title: res.data.msg
-								})
+								console.log('res.statusCode:',res.statusCode)
 							}
 						} else {
-							console.log('res.status:', res.status)
+							console.log('找不到res')
 						}
-					} else {
-						console.log('找不到res')
-					}
 				})
 			}
 			// 无论是切换标签还是登录都清空

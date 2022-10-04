@@ -5,6 +5,10 @@ import App from "./App";
 // 导入路由
 import router from "./router/index.js"
 
+// 导入封装好的请求，并且注册
+import request from './api/common.js'
+Vue.prototype.$request = request
+
 // 导入uview
 import uView from '@/uni_modules/uview-ui'
 Vue.use(uView)

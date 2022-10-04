@@ -58,4 +58,25 @@
     },
     "usingComponents": true
   }
+	// H 5
+	// "h5":{
+	// 	"router":{
+	// 		"base":"/H5/",
+	// 		"mode":"hash"
+	// 	},
+	// 	"devServer":{
+	// 		"port":8080,
+	// 		"disableHostCheck":true,//设置跳过host检查
+	// 		"proxy":{
+	// 			"/api":{
+	// 				"target":"http://8.130.38.74:6661",
+	// 				"changeOrigin":true,//是否跨域
+	// 				"secure":false,//设置支持https协议的代理
+	// 				"pathRewrite":{
+	// 					"^/api":"/"
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
