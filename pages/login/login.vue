@@ -105,6 +105,16 @@ export default {
 		const myToken = uni.getStorageSync('token')
 		if (myToken !== null && myToken !== '' && myToken !== undefined) {
 			// 执行token验证是否过期接口,来判断是免登录还是重新登陆
+			// 现在只进行了验证存在token就自动登录
+			uni.showToast({
+				icon:'success',
+				title:'正在进行登录...'
+			})
+			setTimeout(()=>{
+				uni.switchTab({
+					url: '/pages/index/index'
+				})
+			},1500)
 			console.log("进入了登录注册页面,但是未验证token")
 		}
 	},

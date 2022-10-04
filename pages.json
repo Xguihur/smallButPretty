@@ -1,7 +1,7 @@
 {
 	"easycom": {
-			"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
-		},
+		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
+	},
 	"pages": [{
 			"path": "pages/index/index"
 		},
@@ -16,7 +16,7 @@
 		"borderStyle": "white",
 		"selectedColor": "#276fff",
 		"list": [{
-				"pagePath":"pages/index/index"
+				"pagePath": "pages/index/index"
 			},
 			{
 				"pagePath": "pages/my/my"
