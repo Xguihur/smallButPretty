@@ -21,21 +21,28 @@
 			</view>
 		</view>
 		<view class="plus-wrap" @click="addList">+</view>
-		<uni-popup ref="addList" type="bottom" mask-background-color="rgba(0,0,0,0)">
+		<uni-popup ref="addList" type="bottom" mask-background-color="rgba(0,0,0,0)" v-show="!showPicker">
 			<view class="add-wrap">
 				<button size="mini" type="default" @click="submit">发布</button>
 				<input type="text" placeholder="准备做什么?"  v-model="form.name">
-				<textarea name="" id="" auto-height placeholder="描述一下吧!" v-model="form.description"></textarea>
+				<textarea name="" id="" auto-height placeholder="描述一下吧!" 
+				v-model="form.description"></textarea>
 				<view class="option-wrap">
-					<view class="item-calendar">
-						<picker class="wrap">
-							<image src="../static/icon/calendar.svg" mode=""></image>
-							<text class="time">00：00~12：00</text>
+					<view class="item-calendar" @click="calendarClick(1)">
+						<picker class="wrap" mode="time" value="" @change="canlendarStarChange" @cancel="canlendarStarCancel">
+							<image src="/static/icon/calendar.svg" mode=""></image>
+							<text class="time">{{showStarTime}}</text>
+						</picker>
+					</view>
+					<view class="item-calendar" @click="calendarClick(0)">
+						<picker class="wrap" mode="time" value="" @change="canlendarEndChange" @cancel="canlendarEndCancel">
+							<image src="/static/icon/calendar.svg" mode=""></image>
+							<text class="time">{{showEndTime}}</text>
 						</picker>
 					</view>
 					<view class="item-flag">
 						<view class="wrap" @click="openFlag">
-							<image :src="require('../static/icon/flag-'+form.priority+'.svg')" mode="" ></image>
+							<image :src="require('static/icon/flag-'+form.priority+'.svg')" mode="" ></image>
 							<text class="content" :class="'color'+form.priority">{{priority}}</text>
 						</view>
 					</view>
@@ -45,23 +52,35 @@
 		<uni-popup ref="itemFlag" type="bottom">
 			<view class="flag-wrap">
 				<view class="item" @click="chooseType(1)">
-					<image src="../static/icon/flag-1.svg" mode="" ></image>
+					<image src="/static/icon/flag-1.svg" mode="" ></image>
 					<text style="color: #DF2E2E;">重要且紧急</text>
 				</view>
 				<view class="item"  @click="chooseType(2)">
-					<image src="../static/icon/flag-2.svg" mode="" ></image>
+					<image src="/static/icon/flag-2.svg" mode="" ></image>
 					<text style="color: #ffbb00;">重要但不紧急</text>
 				</view>
 				<view class="item" @click="chooseType(3)">
-					<image src="../static/icon/flag-3.svg" mode=""  ></image>
+					<image src="/static/icon/flag-3.svg" mode=""  ></image>
 					<text style="color: #4772fa;">不重要但紧急</text>
 				</view>
 				<view class="item"  @click="chooseType(4)">
-					<image src="../static/icon/flag-4.svg" mode="" ></image>
+					<image src="/static/icon/flag-4.svg" mode="" ></image>
 					<text style="color: #a3a3a3;">不重要不紧急</text>
 				</view>
 			</view>
 		</uni-popup>
+		<uni-calendar 
+			ref="calendar1"
+			:insert="false"
+			@confirm="StarConfirm"
+			:showMonth="false"
+			 />
+			 <uni-calendar
+			 	ref="calendar0"
+			 	:insert="false"
+			 	@confirm="EndConfirm"
+				:showMonth="false"
+			 	 />
 	</view>
 </template>
 
@@ -90,8 +109,11 @@
 					]
 				},
 				selected: this.current ,//当前激活项
+				showPicker:false,
+				showStarTime:"开始时间",
+				showEndTime:"结束时间",
 				form:{
-					priority:4
+					priority:4,
 				},//提交表单
 				priority:'不重要不紧急' //任务优先级
 			}
@@ -140,20 +162,79 @@
 					this.priority = "不重要不紧急"
 				}
 			this.$refs.itemFlag.close()
-			console.log(this.form);
 			},
 			//打开日历
-			
-			confirm(e){
-				console.log(e);
+			calendarClick(e){
+				if(e==1){
+					this.$refs.calendar1.open();
+				}else{
+					this.$refs.calendar0.open();
+				}
+				this.showPicker=true
+			},
+			//日历确认
+			StarConfirm(e){
+				this.form.startTime = e.fulldate
+			},
+			EndConfirm(e){
+				this.form.endTime = e.fulldate
+			},
+			canlendarStarChange(e){
+				this.showStarTime = e.detail.value
+			    this.form.startTime =  this.form.startTime +' '+ e.detail.value+':00'
+				this.showPicker=false
+			},
+			canlendarEndChange(e){
+				this.showEndTime = e.detail.value
+			    this.form.endTime =  this.form.endTime +' '+ e.detail.value+':00'
+				this.showPicker=false
+			},
+			canlendarStarCancel(){
+				this.showPicker=false
+				this.form.starTime = undefined
+			},
+			canlendarEndCancel(){
+				this.showPicker=false
+				this.form.endTime = undefined
 			},
 			//提交事件
 			submit() {
 				const token = uni.getStorageSync('token')
-				const addForm = {}
-				reqAddList(token, addForm).then(res => {
-					console.log(res);
-				})
+				let {name,description,startTime,endTime,priority} = this.form
+				if(!name){
+					uni.showToast({
+						title: '请输入待办',
+						icon:"error"
+					});
+					return
+				}else if(!startTime) {
+					uni.showToast({
+						title: '请选择开始时间',
+						icon:"error"
+					});
+					return
+				}else if(!endTime){
+					uni.showToast({
+						title: '请选择结束时间',
+						icon:"error"
+					});
+					return
+				}else {
+					const addForm = {
+						name,
+						description,
+						startTime,
+						priority,
+						endTime
+					}
+					reqAddList(addForm).then(res=>{
+						uni.showToast({
+							title:"创建成功",
+							icon:"success"
+						})
+					})
+				}
+				
 			}
 		},
 		mounted() {
@@ -265,6 +346,7 @@
 			position: absolute;
 			right: 70rpx;
             top: 15rpx;
+			z-index: 999;
 			background-color: #2643FC;
 			color: #fff;
 		}
@@ -282,6 +364,7 @@
 			border-top: 2px solid #efefef;
 			margin: 0 auto;
 			padding:20rpx;
+			color: #6f6f6f;
 		}
 
 		.option-wrap {
@@ -295,10 +378,8 @@
 
 			.item-calendar {
 				position: relative;
-				flex: 1;
+				flex: 2;
 				width: 40%;
-				color: #6f6f6f;
-
 				.wrap {
 					display: flex;
 					background-color: #efefef;
@@ -306,16 +387,19 @@
 					height: 45rpx;
 					margin: 0 auto;
 					justify-content: center;
-					border-radius: 10rpx;
+					border-radius: 10rpx;		
+					.time{
+						vertical-align: top;
+						color: #6f6f6f;
+					}
 				}
+		
 			}
 
 			.item-flag {
 				position: relative;
-				flex: 1;
-				width: 40%;
+				flex: 3;
 				color: #6f6f6f;
-
 				.wrap {
 					display: flex;
 					background-color: #efefef;
@@ -331,7 +415,7 @@
 		image {
 			width: 40rpx;
 			height: 40rpx;
-			transform: translate(-20%, 10%);
+			transform: translate(-10%, 10%);
 		}
 	}
 

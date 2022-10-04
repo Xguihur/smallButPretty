@@ -17,3 +17,12 @@ export const reqLogin = (loginForm) => {
 export const reqShowMsg = () => {
 	return request('/user/myinformation')
 }
+
+//添加待办
+export const reqAddList = (addForm) => {
+	return request('/list/add',addForm,'post')
+}
+//查询待办
+export const reqAllList = () => {
+	return request('/user/daylist')
+}

@@ -16,6 +16,7 @@
     }
   },
   "dependencies": {
+    "moment": "^2.29.4",
     "uni-simple-router": "^1.5.5"
   }
 }
