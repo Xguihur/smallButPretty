@@ -17,9 +17,9 @@ const router = new Router({
 	routes: myRouter
 });
 
-//全局路由前置守卫
+// 全局路由前置守卫
 router.beforeEach((to, from, next) => {
-//判断是否存在token，但是为进行验证是否过期
+// 判断是否存在token，但是为进行验证是否过期
   if (uni.getStorageSync('token') !== null && uni.getStorageSync('token') !== ''&&uni.getStorageSync('token')!== undefined) {
     next()
   } else {

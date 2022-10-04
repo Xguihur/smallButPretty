@@ -42,3 +42,24 @@ export const reqShowMsg = () => {
     method: 'get'
   })
 }
+//查看全部列表
+export const reqAllList= (token) => {
+  return requests({
+    url: '/user/daylist',
+    method: 'get',
+	headers:{
+		token
+	}
+  })
+}
+//新增任务
+export const reqAddList= (token,addForm) => {
+  return requests({
+    url: '/list/add',
+    method: 'post',
+	data:addForm,
+	headers:{
+		token
+	}
+  })
+}

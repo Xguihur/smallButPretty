@@ -3,7 +3,7 @@ const requests = axios.create({
 
 	baseURL: "http://8.130.38.74:6661",
 	// 代表请求超时的时间为5s
-	timeout: 5000
+	timeout: 5000,
 })
 
 // 请求拦截器：在发请求之前，请求拦截器可以检测到，可以在发请求之前做一些事情
