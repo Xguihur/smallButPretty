@@ -110,9 +110,11 @@ export default {
 				icon:'success',
 				title:'正在进行登录...'
 			})
-			uni.switchTab({
-				url: '/pages/index/index'
-			})
+			setTimeout(()=>{
+				uni.switchTab({
+					url: '/pages/index/index'
+				})
+			},1500)
 			console.log("进入了登录注册页面,但是未验证token")
 		}
 	},
