@@ -349,7 +349,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 216); //
 //
 //
 //
-var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | component/tabBar */ "component/tabBar").then((function () {return resolve(__webpack_require__(/*! ../../component/tabBar.vue */ 227));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { data: function data() {return { username: '用户名' };}, components: { tabBar: tabBar }, methods: { // 登出
+var tabBar = function tabBar() {Promise.all(/*! require.ensure | component/tabBar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("component/tabBar")]).then((function () {return resolve(__webpack_require__(/*! ../../component/tabBar.vue */ 227));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { data: function data() {return { username: '用户名' };}, components: { tabBar: tabBar }, methods: { // 登出
     signOut: function signOut() {uni.showModal({ title: '提示', content: '是否确定登出？', success: function success(res) {if (res.confirm) {console.log('用户点击确定-登出');} else if (res.cancel) {console.log('用户点击取消');}} });}, // 更换头像
     changeImg: function changeImg() {console.log('更换头像'); // 选择本地相册
       uni.chooseImage({ count: 1, //默认9

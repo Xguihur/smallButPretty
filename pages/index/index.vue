@@ -91,7 +91,7 @@
 
 <script>
 	import tabBar from '../../component/tabBar.vue';
-    import requests from "../../api/request.js"
+    import {reqAllList} from "../../api/index.js"
 	export default {
 		components:{
 			tabBar
@@ -107,16 +107,10 @@
 		methods: {
 			// 发送请求
 			getList(){
-				const res = () => {
-				  return requests({
-				    url: "/user/daylist",
-				    method: 'GET',
-					data:{
-						token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjQ4IiwiZXhwIjoxNjY1Mzk5MTg1LCJ1c2VybmFtZSI6Iua1i-ivleWRmCJ9.daCr58yKYiGxZvTKaYBi1BGQ6vSMk2lNOb_L2QN6doA"
-					}
-				  })
-				}
-				console.log(res);
+				const token = uni.getStorageSync('token')
+				reqAllList(token).then(res=>{
+					console.log(res);
+				})
 			}
 		},
 	};

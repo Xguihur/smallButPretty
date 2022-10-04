@@ -1,3 +1,15 @@
+.color1 {
+  color: #df2e2e;
+}
+.color2 {
+  color: #ffb000;
+}
+.color3 {
+  color: #4772fa;
+}
+.color4 {
+  color: #a3a3a3;
+}
 .tarbar {
   z-index: 9999;
   position: fixed;
@@ -70,13 +82,29 @@
   border-top: 2rpx solid #afafaf;
   background-color: #fff;
   border-radius: 31rpx;
+  position: relative;
+}
+.add-wrap button {
+  position: absolute;
+  right: 70rpx;
+  top: 15rpx;
+  background-color: #2643FC;
+  color: #fff;
 }
 .add-wrap input {
   box-sizing: border-box;
   height: 24rpx;
   width: 80%;
-  margin: 30rpx auto;
+  margin: 20rpx auto;
   color: #6f6f6f;
+}
+.add-wrap textarea {
+  position: relative;
+  height: 300rpx;
+  width: 80%;
+  border-top: 2px solid #efefef;
+  margin: 0 auto;
+  padding: 20rpx;
 }
 .add-wrap .option-wrap {
   position: relative;

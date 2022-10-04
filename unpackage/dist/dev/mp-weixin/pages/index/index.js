@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -223,7 +223,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _request = _interopRequireDefault(__webpack_require__(/*! ../../api/request.js */ 173));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | component/tabBar */ "component/tabBar").then((function () {return resolve(__webpack_require__(/*! ../../component/tabBar.vue */ 227));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _index = __webpack_require__(/*! ../../api/index.js */ 216);var tabBar = function tabBar() {Promise.all(/*! require.ensure | component/tabBar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("component/tabBar")]).then((function () {return resolve(__webpack_require__(/*! ../../component/tabBar.vue */ 227));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     tabBar: tabBar },
@@ -239,17 +239,12 @@ var _request = _interopRequireDefault(__webpack_require__(/*! ../../api/request.
   methods: {
     // 发送请求
     getList: function getList() {
-      var res = function res() {
-        return (0, _request.default)({
-          url: "/user/daylist",
-          method: 'GET',
-          data: {
-            token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjQ4IiwiZXhwIjoxNjY1Mzk5MTg1LCJ1c2VybmFtZSI6Iua1i-ivleWRmCJ9.daCr58yKYiGxZvTKaYBi1BGQ6vSMk2lNOb_L2QN6doA" } });
-
-
-      };
-      console.log(res);
+      var token = uni.getStorageSync('token');
+      (0, _index.reqAllList)(token).then(function (res) {
+        console.log(res);
+      });
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

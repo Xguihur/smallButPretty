@@ -81,9 +81,6 @@ try {
   components = {
     uniPopup: function() {
       return __webpack_require__.e(/*! import() | uni_modules/uni-popup/components/uni-popup/uni-popup */ "uni_modules/uni-popup/components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup/uni-popup.vue */ 234))
-    },
-    uniCalendar: function() {
-      return Promise.all(/*! import() | uni_modules/uni-calendar/components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-calendar/components/uni-calendar/uni-calendar")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-calendar/components/uni-calendar/uni-calendar.vue */ 253))
     }
   }
 } catch (e) {
@@ -107,6 +104,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = __webpack_require__(173)("./flag-" + _vm.form.priority + ".svg")
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -140,132 +147,162 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      tabBar: {
-        color: '#999999',
-        borderStyle: 'white',
-        backgroundColor: '#fff',
-        position: 'bottom',
-        list: [{
-          pagePath: 'pages/index/index',
-          iconPath: '/static/tabbar/list.png',
-          selectedIconPath: '/static/tabbar/list-m.png' },
-
-        {
-          pagePath: 'pages/my/my',
-          iconPath: '/static/tabbar/my.png',
-          selectedIconPath: '/static/tabbar/my-m.png' }] },
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
-      selected: this.current //当前激活项
-    };
-  },
-  props: {
-    current: {
-      type: [Number, String],
-      default: 0 } },
 
 
-  methods: {
-    setSelected: function setSelected(index) {
-      if (index == 1) {
-        uni.switchTab({
-          url: '/pages/my/my' });
 
-      } else if (index == 0) {
-        uni.switchTab({
-          url: '/pages/index/index' });
 
-      }
-      if (this.$route.meta.pagePath == 'pages/index/index') {
-        this.selected == 0;
-      } else {
-        this.selected == 1;
-      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _index = __webpack_require__(/*! ../api/index.js */ 216); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { tabBar: { color: '#999999', borderStyle: 'white', backgroundColor: '#fff', position: 'bottom', list: [{ pagePath: 'pages/index/index', iconPath: '/static/tabbar/list.png', selectedIconPath: '/static/tabbar/list-m.png' }, { pagePath: 'pages/my/my', iconPath: '/static/tabbar/my.png', selectedIconPath: '/static/tabbar/my-m.png' }] }, selected: this.current, //当前激活项
+      form: { priority: 4 }, //提交表单
+      priority: '不重要不紧急' //任务优先级
+    };}, props: { current: { type: [Number, String], default: 0 } }, methods: { // tabbar跳转
+    setSelected: function setSelected(index) {if (index == 1) {uni.switchTab({ url: '/pages/my/my' });} else if (index == 0) {uni.switchTab({ url: '/pages/index/index' });}if (this.$route.meta.pagePath == 'pages/index/index') {this.selected == 0;} else {this.selected == 1;}}, // 打开添加列表
+    addList: function addList() {this.$refs.addList.open();}, //打开任务状态列表
+    openFlag: function openFlag() {this.$refs.itemFlag.open();}, chooseType: function chooseType(e) {this.form.priority = e;if (e == 1) {this.priority = "重要且紧急";} else if (e == 2) {this.priority = "重要但不紧急";} else if (e == 3) {this.priority = "不重要但紧急";} else if (e == 4) {this.priority = "不重要不紧急";}this.$refs.itemFlag.close();
+      console.log(this.form);
     },
-    addList: function addList() {
-      this.$refs.addList.open();
+    //打开日历
+
+    confirm: function confirm(e) {
+      console.log(e);
     },
-    openFlag: function openFlag() {
-      this.$refs.itemFlag.open();
-    },
-    openCalendar: function openCalendar() {
-      this.$refs.calendar.open();
+    //提交事件
+    submit: function submit() {
+      var token = uni.getStorageSync('token');
+      var addForm = {};
+      (0, _index.reqAddList)(token, addForm).then(function (res) {
+        console.log(res);
+      });
     } },
 
   mounted: function mounted() {
