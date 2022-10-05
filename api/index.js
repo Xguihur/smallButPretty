@@ -32,3 +32,7 @@ export const reqAddList = (addForm) => {
 export const reqAllList = () => {
 	return request('/user/daylist')
 }
+//修改待办
+export const reqChangeList = (changeForm) => {
+	return request('/list/update', changeForm, 'put')
+}

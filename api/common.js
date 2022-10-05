@@ -14,9 +14,6 @@ const request = (url = '', date = {}, type = 'GET', ) => {
             header: header,
             dataType: 'json',         
         }).then((response) => {
-            setTimeout(function() {
-                uni.hideLoading();
-            }, 200);
             let [error, res] = response;        
             resolve(res);
         }).catch(error => {

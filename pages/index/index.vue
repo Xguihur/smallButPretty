@@ -14,73 +14,77 @@
 			<view class="list-title" @click="open1=!open1">
 				<view class="circle"></view>
 				<view class="title">重要且紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg"></image>
+				<image class="open-icon logo" src="/static/icon/up.svg" v-if="!open1"></image>
+				<image class="open-icon logo" src="/static/icon/down.svg" v-else></image>
 			</view>
-			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List1" :key="item.id"
-				@click="itemClick(item)">
-				<view class="r-wrap">
+			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List1" :key="item.id">
+				<view class="r-wrap" @click="swichClick(item)">
 					<view class="r" v-if="item.state==0"></view>
 					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
 				</view>
-				<text class="content">{{item.name}}</text>
-				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
+				<text class="content" @click="itemClick(item)">{{item.name}}</text>
+				<text class="time" @click="itemClick(item)">{{item.showStartTime}}~{{item.showEndTime}}</text>
 			</view>
 		</view>
 		<view :class="{'list-wrap':true,'second':true,'close':open2}">
 			<view class="list-title" @click="open2=!open2">
 				<view class="circle"></view>
 				<view class="title">重要但不紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg"></image>
+				<image class="open-icon logo" src="/static/icon/up.svg" v-if="!open2"></image>
+				<image class="open-icon logo" src="/static/icon/down.svg" v-else></image>
 				<view class="logo"></view>
 			</view>
 			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List2" :key="item.id">
-				<view class="r-wrap">
+				<view class="r-wrap"  @click="swichClick(item)">
 					<view class="r" v-if="item.state==0"></view>
 					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
 				</view>
-				<text class="content">{{item.name}}</text>
-				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
+				<text class="content" @click="itemClick(item)">{{item.name}}</text>
+				<text class="time" @click="itemClick(item)">{{item.showStartTime}}~{{item.showEndTime}}</text>
 			</view>
 		</view>
 		<view :class="{'list-wrap':true,'third':true,'close':open3}">
 			<view class="list-title" @click="open3=!open3">
 				<view class="circle"></view>
 				<view class="title">不重要但紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg"></image>
+				<image class="open-icon logo" src="/static/icon/up.svg" v-if="!open3"></image>
+				<image class="open-icon logo" src="/static/icon/down.svg" v-else></image>
 				<view class="logo"></view>
 			</view>
 			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List3" :key="item.id">
-				<view class="r-wrap">
+				<view class="r-wrap" @click="swichClick(item)">
 					<view class="r" v-if="item.state==0"></view>
 					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
 				</view>
-				<text class="content">{{item.name}}</text>
-				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
+				<text class="content" @click="itemClick(item)">{{item.name}}</text>
+				<text class="time" @click="itemClick(item)">{{item.showStartTime}}~{{item.showEndTime}}</text>
 			</view>
 		</view>
 		<view :class="{'list-wrap':true,'fourth':true,'close':open4}">
 			<view class="list-title" @click="open4=!open4">
 				<view class="circle"></view>
 				<view class="title">不重要不紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg"></image>
+				<image class="open-icon logo" src="/static/icon/up.svg" v-if="!open4"></image>
+				<image class="open-icon logo" src="/static/icon/down.svg" v-else></image>
 				<view class="logo"></view>
 			</view>
 			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List4" :key="item.id">
-				<view class="r-wrap">
+				<view class="r-wrap" @click="swichClick(item)">
 					<view class="r" v-if="item.state==0"></view>
 					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
 				</view>
-				<text class="content">{{item.name}}</text>
-				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
+				<text class="content" @click="itemClick(item)">{{item.name}}</text>
+				<text class="time" @click="itemClick(item)">{{item.showStartTime}}~{{item.showEndTime}}</text>
 			</view>
 		</view>
-		<tab-bar :current="0" ref="tabBars"></tab-bar>
+		<tab-bar :current="0" ref="tabBars" @fresh="getList"></tab-bar>
 	</view>
 </template>
 
 <script>
 	import tabBar from '../../component/tabBar.vue';
 	import moment from 'moment';
+	import {reqChangeList} from "../../api/index"
 	import {
 		reqAllList
 	} from "../../api/index.js"
@@ -109,33 +113,37 @@
 				reqAllList().then(res => {
 					if (res.data.lists) {
 						let list = res.data.lists
+						this.List1 = []
+						this.List2 = []
+						this.List3 = []
+						this.List4 = []
 						list.forEach((item) => {
 							if (item.priority === 1) {
 								this.List1.push({
 									...item,
-									startTime: moment(item.startTime).format('hh:mm'),
-									endTime: moment(item.endTime).format('hh:mm')
+									showStartTime: moment(item.startTime).format('HH:mm'),
+									showEndTime: moment(item.endTime).format('HH:mm')
 								})
 							}
 							if (item.priority === 2) {
 								this.List2.push({
 									...item,
-									startTime: moment(item.startTime).format('hh:mm'),
-									endTime: moment(item.endTime).format('hh:mm')
+									showStartTime: moment(item.startTime).format('HH:mm'),
+									showEndTime: moment(item.endTime).format('HH:mm')
 								})
 							}
 							if (item.priority === 3) {
 								this.List3.push({
 									...item,
-									startTime: moment(item.startTime).format('hh:mm'),
-									endTime: moment(item.endTime).format('hh:mm')
+									showStartTime: moment(item.startTime).format('HH:mm'),
+									showEndTime: moment(item.endTime).format('HH:mm')
 								})
 							}
 							if (item.priority === 4) {
 								this.List4.push({
 									...item,
-									startTime: moment(item.startTime).format('hh:mm'),
-									endTime: moment(item.endTime).format('hh:mm')
+									showStartTime: moment(item.startTime).format('HH:mm'),
+									showEndTime: moment(item.endTime).format('HH:mm')
 								})
 							}
 						})
@@ -145,12 +153,34 @@
 				if (this.List2) this.open2 = false
 				if (this.List3) this.open3 = false
 				if (this.List4) this.open4 = false
-				console.log(this.List1);
 			},
 			itemClick(item) {
+				if(item.state==0) {
 				this.$refs.tabBars.addList(item)
+				}else{
+					return
+				}
+			},
+			swichClick(item){
+				let {id,name,description,state,startTime,endTime} = item
+				if(state==0){
+					state=1
+				}else{
+					state=0
+				}
+				let changeForm = {
+					id,
+					name,
+					startTime,
+					endTime,
+					state
+				}
+				reqChangeList(changeForm).then(res=>{
+					this.getList()
+				})
+				
 			}
-		},     
+		},
 	}
 </script>
 
