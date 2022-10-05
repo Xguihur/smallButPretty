@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "uni-popup": "/uni_modules/uni-popup/components/uni-popup/uni-popup",
-    "uni-calendar": "/uni_modules/uni-calendar/components/uni-calendar/uni-calendar"
-  },
-  "component": true
-}
