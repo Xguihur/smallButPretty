@@ -18,7 +18,7 @@
 					<view class="my-text-content">更换头像</view>
 				</view>
 			</view>
-			
+
 			<!-- 修改个性签名 -->
 			<view class="my-func-item" @click="changeMotto()">
 				<view class="my-item-content">
@@ -205,13 +205,13 @@ export default {
 
 			reqModifyMsg(modifyData).then(res => {
 				console.log(res)
-				if(res.data.state=== true){
+				if (res.data.state === true) {
 					uni.showToast({
 						icon: 'success',
 						title: res.data.msg
 					})
 					// 修改之后应该重新渲染一下数据
-				}else{
+				} else {
 					uni.showToast({
 						icon: 'error',
 						title: res.data.msg
@@ -236,13 +236,13 @@ export default {
 
 			reqModifyMsg(modifyData).then(res => {
 				console.log(res)
-				if(res.data.state === true){
+				if (res.data.state === true) {
 					uni.showToast({
 						icon: 'success',
 						title: res.data.msg
 					})
 					// 修改之后应该退出登陆
-				}else{
+				} else {
 					uni.showToast({
 						icon: 'error',
 						title: res.data.msg
@@ -257,30 +257,28 @@ export default {
 		},
 		dialogInputMottoConfirm(val) {
 			console.log(val)
-		
+
 			// 调用后端接口修改密码
 			const modifyData = {
 				intro: val
 			}
 			console.log(modifyData)
-		
+
 			reqModifyMsg(modifyData).then(res => {
 				console.log(res)
-				if(res.data.state === true){
+				if (res.data.state === true) {
 					uni.showToast({
 						icon: 'success',
 						title: res.data.msg
 					})
 					// 修改之后应该渲染数据
-				}else{
+				} else {
 					uni.showToast({
 						icon: 'error',
 						title: res.data.msg
 					})
 				}
 			})
-		
-		
 		},
 
 		// 使用指南
