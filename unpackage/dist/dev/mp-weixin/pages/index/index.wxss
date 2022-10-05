@@ -1,6 +1,7 @@
 .container {
   padding: 40rpx;
   font-size: 28rpx;
+  padding-bottom: 120rpx;
   background-color: #f1f2f3;
 }
 .close {

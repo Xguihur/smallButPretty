@@ -133,7 +133,6 @@
 </template>
 
 <script>
-	import moment from "moment"
 	import {
 		reqAddList,
 		reqChangeList
@@ -189,11 +188,6 @@
 						url: '/pages/index/index'
 					})
 				}
-				if (this.$route.meta.pagePath == 'pages/index/index') {
-					this.selected = 0;
-				} else {
-					this.selected = 1
-				}
 			},
 			// 打开添加列表
 			addList(item) {
@@ -206,11 +200,11 @@
 					this.changeShowEndTime = item.showEndTime
 					if (item.priority == 1) {
 						this.changePriority = "重要且紧急"
-					} else if (e == 2) {
+					} else if (item.priority == 2) {
 						this.changePriority = "重要但不紧急"
-					} else if (e == 3) {
+					} else if (item.priority == 3) {
 						this.changePriority = "不重要但紧急"
-					} else if (e == 4) {
+					} else if (item.priority == 4) {
 						this.changePriority = "不重要不紧急"
 					}
 				}
@@ -341,6 +335,7 @@
 						state,
 					}
 					reqAddList(addForm).then(res => {
+						console.log(res);
 						uni.showToast({
 							title: "创建成功",
 							icon: "success"
@@ -393,11 +388,12 @@
 						priority,
 						endTime,
 						id,
+						state
 					}
 					console.log(changeForm);
 					reqChangeList(changeForm).then(res => {
 						uni.showToast({
-							title: "修改成功",
+							title: res.msg,
 							icon: "success"
 						})
 						this.changeForm = {
@@ -413,11 +409,6 @@
 			}
 		},
 		mounted() {
-			if (this.$route.meta.pagePath == 'pages/index/index') {
-				this.selected == 0
-			} else {
-				this.selected == 1
-			}
 		},
 		watch: {}
 	}

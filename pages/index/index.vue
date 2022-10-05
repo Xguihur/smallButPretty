@@ -19,8 +19,8 @@
 			</view>
 			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List1" :key="item.id">
 				<view class="r-wrap" @click="swichClick(item)">
-					<view class="r" v-if="item.state==0"></view>
-					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
+					<view class="r" v-show="item.state==0"></view>
+					<image src="/static/icon/yes.svg" v-show="item.state==1" mode="widthFix" class="logo"></image>
 				</view>
 				<text class="content" @click="itemClick(item)">{{item.name}}</text>
 				<text class="time" @click="itemClick(item)">{{item.showStartTime}}~{{item.showEndTime}}</text>
@@ -35,7 +35,7 @@
 				<view class="logo"></view>
 			</view>
 			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List2" :key="item.id">
-				<view class="r-wrap"  @click="swichClick(item)">
+				<view class="r-wrap" @click="swichClick(item)">
 					<view class="r" v-if="item.state==0"></view>
 					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
 				</view>
@@ -76,15 +76,17 @@
 				<text class="content" @click="itemClick(item)">{{item.name}}</text>
 				<text class="time" @click="itemClick(item)">{{item.showStartTime}}~{{item.showEndTime}}</text>
 			</view>
+			<tab-bar :current="0" ref="tabBars" @fresh="getList"></tab-bar>
 		</view>
-		<tab-bar :current="0" ref="tabBars" @fresh="getList"></tab-bar>
 	</view>
 </template>
 
 <script>
 	import tabBar from '../../component/tabBar.vue';
 	import moment from 'moment';
-	import {reqChangeList} from "../../api/index"
+	import {
+		reqChangeList
+	} from "../../api/index"
 	import {
 		reqAllList
 	} from "../../api/index.js"
@@ -104,7 +106,8 @@
 				open4: true,
 			}
 		},
-		mounted() {
+		mounted() {},
+		onShow() {
 			this.getList()
 		},
 		methods: {
@@ -155,30 +158,31 @@
 				if (this.List4) this.open4 = false
 			},
 			itemClick(item) {
-				if(item.state==0) {
-				this.$refs.tabBars.addList(item)
-				}else{
+				if (item.state == 0) {
+					this.$refs.tabBars.addList(item)
+				} else {
 					return
 				}
 			},
-			swichClick(item){
-				let {id,name,description,state,startTime,endTime} = item
-				if(state==0){
-					state=1
-				}else{
-					state=0
+			swichClick(item) {
+				let {
+					id,
+					state,
+				} = item
+				if (state == 0) {
+					state = 1
+				} else {
+					state = 0
 				}
 				let changeForm = {
 					id,
-					name,
-					startTime,
-					endTime,
 					state
 				}
-				reqChangeList(changeForm).then(res=>{
+				reqChangeList(changeForm).then(() => {
 					this.getList()
+					console.log(this.List1);
 				})
-				
+
 			}
 		},
 	}
@@ -188,6 +192,7 @@
 	.container {
 		padding: 40rpx;
 		font-size: 28rpx;
+		padding-bottom: 120rpx;
 		background-color: #f1f2f3;
 	}
 

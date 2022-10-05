@@ -1,3 +1,15 @@
+.color1 {
+  color: #DF2E2E;
+}
+.color2 {
+  color: #ffb000;
+}
+.color3 {
+  color: #4772fa;
+}
+.color4 {
+  color: #a3a3a3;
+}
 .tarbar {
   z-index: 9999;
   position: fixed;
