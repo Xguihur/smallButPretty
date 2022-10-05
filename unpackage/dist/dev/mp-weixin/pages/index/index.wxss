@@ -4,7 +4,7 @@
   background-color: #f1f2f3;
 }
 .close {
-  height: 80rpx;
+  height: 60rpx;
   transition: all 0.2s;
 }
 .logo {

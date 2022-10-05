@@ -122,53 +122,38 @@
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			tabBar: {
-				color: '#999999',
-				borderStyle: 'white',
-				backgroundColor: '#fff',
-				position: 'bottom',
-				list: [
-					{
-						pagePath: 'pages/index/index',
-						iconPath: '/static/tabbar/list.png',
-						selectedIconPath: '/static/tabbar/list-m.png'
-					},
-					{
-						pagePath: 'pages/my/my',
-						iconPath: '/static/tabbar/my.png',
-						selectedIconPath: '/static/tabbar/my-m.png'
-					}
-				]
-			},
-			selected: this.current, //当前激活项
-			showPicker: false,
-			showStarTime: '开始时间',
-			showEndTime: '结束时间',
-			form: {
-				priority: 4
-			}, //提交表单
-			priority: '不重要不紧急' //任务优先级
-		}
-	},
-	props: {
-		current: {
-			type: [Number, String],
-			default: 0
-		}
-	},
-	methods: {
-		setSelected(index) {
-			if (index == 1) {
-				uni.switchTab({
-					url: '/pages/my/my'
-				})
-			} else if (index == 0) {
-				uni.switchTab({
-					url: '/pages/index/index'
-				})
+	import moment from "moment"
+	import {
+		reqAddList
+	} from "../api/index.js"
+	export default {
+		data() {
+			return {
+				tabBar: {
+					color: '#999999',
+					borderStyle: 'white',
+					backgroundColor: '#fff',
+					position: 'bottom',
+					list: [{
+							pagePath: 'pages/index/index',
+							iconPath: '/static/tabbar/list.png',
+							selectedIconPath: '/static/tabbar/list-m.png'
+						},
+						{
+							pagePath: 'pages/my/my',
+							iconPath: '/static/tabbar/my.png',
+							selectedIconPath: '/static/tabbar/my-m.png'
+						}
+					]
+				},
+				selected: this.current ,//当前激活项
+				showPicker:false,
+				showStarTime:"开始时间",
+				showEndTime:"结束时间",
+				form:{
+					priority:4,
+				},//提交表单
+				priority:'不重要不紧急' //任务优先级
 			}
 			if (this.$route.meta.pagePath == 'pages/index/index') {
 				this.selected == 0
@@ -176,22 +161,123 @@ export default {
 				this.selected == 1
 			}
 		},
-		addList() {
-			this.$refs.addList.open()
-		},
-		openFlag() {
-			this.$refs.itemFlag.open()
-		},
-		chooseType(e) {
+		methods: {
+			// tabbar跳转
+			setSelected(index) {
+				if (index == 1) {
+					uni.switchTab({
+						url: '/pages/my/my'
+					})
+				} else if (index == 0) {
+					uni.switchTab({
+						url: '/pages/index/index'
+					})
+				}
+				if (this.$route.meta.pagePath == 'pages/index/index') {
+					this.selected == 0;
+				} else {
+					this.selected == 1
+				}
+			},
+			// 打开添加列表
+			addList(item) {
+				if(item.type){
+					this.$refs.addList.open()
+				}else{
+					this.$refs.addList.open()
+					this.form = item
+					this.showStarTime = moment(item.starTime).format('hh:mm')
+					this.showEndTime = item.endTime
+				}
+
+			},
+			//打开任务状态列表
+			openFlag() {
+				this.$refs.itemFlag.open()
+			},
+			chooseType(e){
 			this.form.priority = e
-			if (e == 1) {
-				this.priority = '重要且紧急'
-			} else if (e == 2) {
-				this.priority = '重要但不紧急'
-			} else if (e == 3) {
-				this.priority = '不重要但紧急'
-			} else if (e == 4) {
-				this.priority = '不重要不紧急'
+				if(e==1) {
+				this.priority = "重要且紧急"
+				}else if (e==2){
+					this.priority = "重要但不紧急"
+				}else if (e==3){
+					this.priority = "不重要但紧急"
+				}else if (e==4){
+					this.priority = "不重要不紧急"
+				}
+			this.$refs.itemFlag.close()
+			},
+			//打开日历
+			calendarClick(e){
+				if(e==1){
+					this.$refs.calendar1.open();
+				}else{
+					this.$refs.calendar0.open();
+				}
+				this.showPicker=true
+			},
+			//日历确认
+			StarConfirm(e){
+				this.form.startTime = e.fulldate
+			},
+			EndConfirm(e){
+				this.form.endTime = e.fulldate
+			},
+			canlendarStarChange(e){
+				this.showStarTime = e.detail.value
+			    this.form.startTime =  this.form.startTime +' '+ e.detail.value+':00'
+				this.showPicker=false
+			},
+			canlendarEndChange(e){
+				this.showEndTime = e.detail.value
+			    this.form.endTime =  this.form.endTime +' '+ e.detail.value+':00'
+				this.showPicker=false
+			},
+			canlendarStarCancel(){
+				this.showPicker=false
+				this.form.starTime = undefined
+			},
+			canlendarEndCancel(){
+				this.showPicker=false
+				this.form.endTime = undefined
+			},
+			//提交事件
+			submit() {
+				let {name,description,startTime,endTime,priority} = this.form
+				if(!name){
+					uni.showToast({
+						title: '请输入待办',
+						icon:"error"
+					});
+					return
+				}else if(!startTime) {
+					uni.showToast({
+						title: '请选择开始时间',
+						icon:"error"
+					});
+					return
+				}else if(!endTime){
+					uni.showToast({
+						title: '请选择结束时间',
+						icon:"error"
+					});
+					return
+				}else {
+					const addForm = {
+						name,
+						description,
+						startTime,
+						priority,
+						endTime
+					}
+					reqAddList(addForm).then(res=>{
+						uni.showToast({
+							title:"创建成功",
+							icon:"success"
+						})
+					})
+				}
 			}
 			this.$refs.itemFlag.close()
 		},

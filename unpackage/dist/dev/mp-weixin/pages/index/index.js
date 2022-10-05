@@ -228,6 +228,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
 var _moment = _interopRequireDefault(__webpack_require__(/*! moment */ 144));
 var _index = __webpack_require__(/*! ../../api/index.js */ 282);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var tabBar = function tabBar() {Promise.all(/*! require.ensure | component/tabBar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("component/tabBar")]).then((function () {return resolve(__webpack_require__(/*! ../../component/tabBar.vue */ 301));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
@@ -255,38 +256,48 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 282);function _intero
     // 发送请求
     getList: function getList() {var _this = this;
       (0, _index.reqAllList)().then(function (res) {
-        var list = res.data.lists;
-        list.forEach(function (item) {
-          if (item.priority === 1) {
-            _this.List1.push(_objectSpread(_objectSpread({},
-            item), {}, {
-              startTime: (0, _moment.default)(item.startTime).format('hh:mm'),
-              endTime: (0, _moment.default)(item.endTime).format('hh:mm') }));
+        if (res.data.lists) {
+          var list = res.data.lists;
+          list.forEach(function (item) {
+            if (item.priority === 1) {
+              _this.List1.push(_objectSpread(_objectSpread({},
+              item), {}, {
+                startTime: (0, _moment.default)(item.startTime).format('hh:mm'),
+                endTime: (0, _moment.default)(item.endTime).format('hh:mm') }));
 
-          }
-          if (item.priority === 2) {
-            _this.List2.push(_objectSpread(_objectSpread({},
-            item), {}, {
-              startTime: (0, _moment.default)(item.startTime).format('hh:mm'),
-              endTime: (0, _moment.default)(item.endTime).format('hh:mm') }));
+            }
+            if (item.priority === 2) {
+              _this.List2.push(_objectSpread(_objectSpread({},
+              item), {}, {
+                startTime: (0, _moment.default)(item.startTime).format('hh:mm'),
+                endTime: (0, _moment.default)(item.endTime).format('hh:mm') }));
 
-          }
-          if (item.priority === 3) {
-            _this.List3.push(_objectSpread(_objectSpread({},
-            item), {}, {
-              startTime: (0, _moment.default)(item.startTime).format('hh:mm'),
-              endTime: (0, _moment.default)(item.endTime).format('hh:mm') }));
+            }
+            if (item.priority === 3) {
+              _this.List3.push(_objectSpread(_objectSpread({},
+              item), {}, {
+                startTime: (0, _moment.default)(item.startTime).format('hh:mm'),
+                endTime: (0, _moment.default)(item.endTime).format('hh:mm') }));
 
-          }
-          if (item.priority === 4) {
-            _this.List4.push(_objectSpread(_objectSpread({},
-            item), {}, {
-              startTime: (0, _moment.default)(item.startTime).format('hh:mm'),
-              endTime: (0, _moment.default)(item.endTime).format('hh:mm') }));
+            }
+            if (item.priority === 4) {
+              _this.List4.push(_objectSpread(_objectSpread({},
+              item), {}, {
+                startTime: (0, _moment.default)(item.startTime).format('hh:mm'),
+                endTime: (0, _moment.default)(item.endTime).format('hh:mm') }));
 
-          }
-        });
+            }
+          });
+        }
       });
+      if (this.List1) this.open1 = false;
+      if (this.List2) this.open2 = false;
+      if (this.List3) this.open3 = false;
+      if (this.List4) this.open4 = false;
+      console.log(this.List1);
+    },
+    itemClick: function itemClick(item) {
+      this.$refs.tabBars.addList(item);
     } } };exports.default = _default;
 
 /***/ }),
