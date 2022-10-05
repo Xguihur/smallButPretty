@@ -147,9 +147,373 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!W:/工作室项目/终端练习生/smallButPretty/oneList/component/tabBar.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js):\nSyntaxError: Unexpected token, expected \",\" (282:3)\n    at Object._raise (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:746:17)\n    at Object.raiseWithData (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:739:17)\n    at Object.raise (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:733:17)\n    at Object.unexpected (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:8807:16)\n    at Object.expect (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:8793:28)\n    at Object.parseObj (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:10439:14)\n    at Object.parseExprAtom (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:10055:28)\n    at Object.parseExprSubscripts (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9656:23)\n    at Object.parseMaybeUnary (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9636:21)\n    at Object.parseMaybeUnary (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:6877:20)\n    at Object.parseExprOps (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9506:23)\n    at Object.parseMaybeConditional (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9479:23)\n    at Object.parseMaybeAssign (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9434:21)\n    at Object.parseMaybeAssign (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:6822:20)\n    at Object.parseObjectProperty (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:10586:101)\n    at Object.parseObjPropValue (W:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:10611:101)");
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _moment = _interopRequireDefault(__webpack_require__(/*! moment */ 144));
+var _index = __webpack_require__(/*! ../api/index.js */ 282);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { tabBar: { color: '#999999', borderStyle: 'white', backgroundColor: '#fff', position: 'bottom', list: [{ pagePath: 'pages/index/index', iconPath: '/static/tabbar/list.png', selectedIconPath: '/static/tabbar/list-m.png' }, { pagePath: 'pages/my/my', iconPath: '/static/tabbar/my.png', selectedIconPath: '/static/tabbar/my-m.png' }] }, selected: this.current, //当前激活项
+      showPicker: false, showStarTime: "开始时间", showEndTime: "结束时间", form: { priority: 4 }, //提交表单
+      priority: '不重要不紧急' //任务优先级
+    };if (this.$route.meta.pagePath == 'pages/index/index') {this.selected == 0;} else {this.selected == 1;}}, methods: { // tabbar跳转
+    setSelected: function setSelected(index) {if (index == 1) {uni.switchTab({ url: '/pages/my/my' });} else if (index == 0) {uni.switchTab({ url: '/pages/index/index' });}if (this.$route.meta.pagePath == 'pages/index/index') {this.selected == 0;} else {this.selected == 1;}}, // 打开添加列表
+    addList: function addList(item) {if (item.type) {this.$refs.addList.open();} else {this.$refs.addList.open();this.form = item;this.showStarTime = (0, _moment.default)(item.starTime).format('hh:mm');this.showEndTime = item.endTime;}}, //打开任务状态列表
+    openFlag: function openFlag() {this.$refs.itemFlag.open();}, chooseType: function chooseType(e) {this.form.priority = e;if (e == 1) {this.priority = "重要且紧急";} else if (e == 2) {this.priority = "重要但不紧急";} else if (e == 3) {this.priority = "不重要但紧急";} else if (e == 4) {this.priority = "不重要不紧急";}this.$refs.itemFlag.close();}, //打开日历
+    calendarClick: function calendarClick(e) {if (e == 1) {this.$refs.calendar1.open();} else {this.$refs.calendar0.open();}this.showPicker = true;}, //日历确认
+    StarConfirm: function StarConfirm(e) {this.form.startTime = e.fulldate;}, EndConfirm: function EndConfirm(e) {this.form.endTime = e.fulldate;}, canlendarStarChange: function canlendarStarChange(e) {this.showStarTime = e.detail.value;this.form.startTime = this.form.startTime + ' ' + e.detail.value + ':00';this.showPicker = false;}, canlendarEndChange: function canlendarEndChange(e) {this.showEndTime = e.detail.value;this.form.endTime = this.form.endTime + ' ' + e.detail.value + ':00';this.showPicker = false;}, canlendarStarCancel: function canlendarStarCancel() {this.showPicker = false;this.form.starTime = undefined;}, canlendarEndCancel: function canlendarEndCancel() {this.showPicker = false;this.form.endTime = undefined;}, //提交事件
+    submit: function submit() {var _this$form = this.form,name = _this$form.name,description = _this$form.description,startTime = _this$form.startTime,endTime = _this$form.endTime,priority = _this$form.priority;if (!name) {uni.showToast({ title: '请输入待办', icon: "error" });return;} else if (!startTime) {uni.showToast({ title: '请选择开始时间', icon: "error" });
+        return;
+      } else if (!endTime) {
+        uni.showToast({
+          title: '请选择结束时间',
+          icon: "error" });
+
+        return;
+      } else {
+        var addForm = {
+          name: name,
+          description: description,
+          startTime: startTime,
+          priority: priority,
+          endTime: endTime };
+
+        (0, _index.reqAddList)(addForm).then(function (res) {
+          uni.showToast({
+            title: "创建成功",
+            icon: "success" });
+
+        });
+      }
+      this.$refs.itemFlag.close();
+    } },
+
+  //打开日历
+  calendarClick: function calendarClick(e) {
+    if (e == 1) {
+      this.$refs.calendar1.open();
+    } else {
+      this.$refs.calendar0.open();
+    }
+    this.showPicker = true;
+  },
+  //日历确认
+  StarConfirm: function StarConfirm(e) {
+    this.form.startTime = e.fulldate;
+  },
+  EndConfirm: function EndConfirm(e) {
+    this.form.endTime = e.fulldate;
+  },
+  canlendarStarChange: function canlendarStarChange(e) {
+    this.showStarTime = e.detail.value;
+    this.form.startTime = this.form.startTime + ' ' + e.detail.value + ':00';
+    this.showPicker = false;
+  },
+  canlendarEndChange: function canlendarEndChange(e) {
+    this.showEndTime = e.detail.value;
+    this.form.endTime = this.form.endTime + ' ' + e.detail.value + ':00';
+    this.showPicker = false;
+  },
+  canlendarStarCancel: function canlendarStarCancel() {
+    this.showPicker = false;
+    this.form.starTime = undefined;
+  },
+  canlendarEndCancel: function canlendarEndCancel() {
+    this.showPicker = false;
+    this.form.endTime = undefined;
+  },
+  //提交事件
+  submit: function submit() {
+    var token = uni.getStorageSync('token');var _this$form2 =
+    this.form,name = _this$form2.name,description = _this$form2.description,startTime = _this$form2.startTime,endTime = _this$form2.endTime,priority = _this$form2.priority;
+    if (!name) {
+      uni.showToast({
+        title: '请输入待办',
+        icon: 'error' });
+
+      return;
+    } else if (!startTime) {
+      uni.showToast({
+        title: '请选择开始时间',
+        icon: 'error' });
+
+      return;
+    } else if (!endTime) {
+      uni.showToast({
+        title: '请选择结束时间',
+        icon: 'error' });
+
+      return;
+    } else {
+      var addForm = {
+        name: name,
+        description: description,
+        startTime: startTime,
+        priority: priority,
+        endTime: endTime };
+
+      (0, _index.reqAddList)(addForm).then(function (res) {
+        uni.showToast({
+          title: '创建成功',
+          icon: 'success' });
+
+      });
+    }
+  },
+  mounted: function mounted() {
+    if (this.$route.meta.pagePath == 'pages/index/index') {
+      this.selected == 0;
+    } else {
+      this.selected == 1;
+    }
+  },
+  watch: {} };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

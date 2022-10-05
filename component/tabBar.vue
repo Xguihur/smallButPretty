@@ -278,8 +278,8 @@
 						})
 					})
 				}
-			}
 			this.$refs.itemFlag.close()
+			}
 		},
 		//打开日历
 		calendarClick(e) {
@@ -352,7 +352,6 @@
 					})
 				})
 			}
-		}
 	},
 	mounted() {
 		if (this.$route.meta.pagePath == 'pages/index/index') {
