@@ -55,7 +55,7 @@
   position: absolute;
   width: 110rpx;
   height: 110rpx;
-  background-color: #2643FC;
+  background-color: #2643fc;
   bottom: 3rpx;
   left: 50%;
   color: #fff;
@@ -70,12 +70,30 @@
   border-top: 2rpx solid #afafaf;
   background-color: #fff;
   border-radius: 31rpx;
+  position: relative;
+}
+.add-wrap button {
+  position: absolute;
+  right: 70rpx;
+  top: 15rpx;
+  z-index: 999;
+  background-color: #2643fc;
+  color: #fff;
 }
 .add-wrap input {
   box-sizing: border-box;
   height: 24rpx;
   width: 80%;
   margin: 30rpx auto;
+  color: #6f6f6f;
+}
+.add-wrap textarea {
+  position: relative;
+  height: 300rpx;
+  width: 80%;
+  border-top: 2px solid #efefef;
+  margin: 0 auto;
+  padding: 20rpx;
   color: #6f6f6f;
 }
 .add-wrap .option-wrap {
@@ -89,9 +107,8 @@
 }
 .add-wrap .option-wrap .item-calendar {
   position: relative;
-  flex: 1;
+  flex: 2;
   width: 40%;
-  color: #6f6f6f;
 }
 .add-wrap .option-wrap .item-calendar .wrap {
   display: flex;
@@ -102,10 +119,13 @@
   justify-content: center;
   border-radius: 10rpx;
 }
+.add-wrap .option-wrap .item-calendar .wrap .time {
+  vertical-align: top;
+  color: #6f6f6f;
+}
 .add-wrap .option-wrap .item-flag {
   position: relative;
-  flex: 1;
-  width: 40%;
+  flex: 3;
   color: #6f6f6f;
 }
 .add-wrap .option-wrap .item-flag .wrap {
@@ -120,8 +140,8 @@
 .add-wrap image {
   width: 40rpx;
   height: 40rpx;
-  -webkit-transform: translate(-20%, 10%);
-          transform: translate(-20%, 10%);
+  -webkit-transform: translate(-10%, 10%);
+          transform: translate(-10%, 10%);
 }
 .flag-wrap {
   width: 500rpx;

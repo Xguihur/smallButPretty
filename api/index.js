@@ -4,12 +4,12 @@ import request from "./common.js"
 
 // 用户注册
 export const reqRegister = (registerForm) => {
-	return request('/user/add',registerForm,'post')
+	return request('/user/add', registerForm, 'post')
 }
 
 // 用户登录
 export const reqLogin = (loginForm) => {
-	return request('/user/login',loginForm,'post')
+	return request('/user/login', loginForm, 'post')
 }
 
 
@@ -18,7 +18,17 @@ export const reqShowMsg = () => {
 	return request('/user/myinformation')
 }
 
+
 // 修改个人信息
 export const reqModifyMsg = (modifyData) => {
-	return request('/user/update',modifyData,'put')
+	return request('/user/update', modifyData, 'put')
+}
+
+//添加待办
+export const reqAddList = (addForm) => {
+	return request('/list/add', addForm, 'post')
+}
+//查询待办
+export const reqAllList = () => {
+	return request('/user/daylist')
 }

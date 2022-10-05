@@ -7,82 +7,70 @@
 			<view class="search-wrap">
 				<input type="text">
 				<view class="search-title">搜索计划</view>
-				<image class="search logo" src="../../static/icon/search.svg"></image>
+				<image class="search logo" src="/static/icon/search.svg"></image>
 			</view>
 		</view>
-		<view class="list-wrap first">
-			<view class="list-title">
+		<view :class="{'list-wrap':true,'first':true,'close':open1}">
+			<view class="list-title"  @click="open1=!open1">
 				<view class="circle"></view>
 				<view class="title">重要且紧急</view>
-				<image class="open-icon logo" src="../../static/icon/up.svg"></image>
+				<image class="open-icon logo" src="/static/icon/up.svg"></image>
 			</view>
-			<view class="list-item">
+			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List1" :key="item.id">
 				<view class="r-wrap">
-					<view class="r"></view>
+					<view class="r" v-if="item.state==0"></view>
+					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
 				</view>
-				<text class="content">参加会议啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</text>
-				<text class="time">9：00~10：00</text>
-			</view>
-			<view class="list-item done">
-				<view class="r-wrap">
-					<view class="r" v-if="!isDone"></view>
-					<image v-else class="ri logo" src="../../static/icon/yes.svg"></image>
-				</view>
-				<text class="content">参加会议</text>
-				<text class="time">9：00~10：00</text>
+				<text class="content">{{item.name}}</text>
+				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
 			</view>
 		</view>
-		<view class="list-wrap second">
-			<view class="list-title">
+		<view :class="{'list-wrap':true,'second':true,'close':open2}" >
+			<view class="list-title" @click="open2=!open2">
 				<view class="circle"></view>
 				<view class="title">重要但不紧急</view>
-					<image class="open-icon logo" src="../../static/icon/up.svg"></image>
+				<image class="open-icon logo" src="/static/icon/up.svg"></image>
 				<view class="logo"></view>
 			</view>
-			<view class="list-item">
+			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List2" :key="item.id">
 				<view class="r-wrap">
-					<view class="r"></view>
+					<view class="r" v-if="item.state==0"></view>
+					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
 				</view>
-				<text class="content">参加会议啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</text>
-				<text class="time">9：00~10：00</text>
-			</view>
-			<view :class="{'list-item':true, 'done':isDone}">
-				<view class="r-wrap">
-					<view class="r" v-if="!isDone"></view>
-					<image v-else class="logo" src="../../static/icon/yes.svg"></image>
-				</view>
-				<text class="content">参加会议</text>
-				<text class="time">9：00~10：00</text>
+				<text class="content">{{item.name}}</text>
+				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
 			</view>
 		</view>
-		<view class="list-wrap third">
-			<view class="list-title">
+	<view :class="{'list-wrap':true,'third':true,'close':open3}" >
+			<view class="list-title" @click="open3=!open3">
 				<view class="circle"></view>
 				<view class="title">不重要但紧急</view>
-					<image class="open-icon logo" src="../../static/icon/up.svg"></image>
+				<image class="open-icon logo" src="/static/icon/up.svg"></image>
 				<view class="logo"></view>
 			</view>
-			<view class="list-item">
+			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List3" :key="item.id">
 				<view class="r-wrap">
-					<view class="r"></view>
+					<view class="r" v-if="item.state==0"></view>
+					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
 				</view>
-				<text class="content">参加会议啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</text>
-				<text class="time">9：00~10：00</text>
-			</view>
-			<view class="list-item done">
-				<view class="r-wrap">
-					<view class="r"></view>
-				</view>
-				<text class="content">参加会议</text>
-				<text class="time">9：00~10：00</text>
+				<text class="content">{{item.name}}</text>
+				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
 			</view>
 		</view>
-		<view class="list-wrap fourth">
-			<view class="list-title">
+	<view :class="{'list-wrap':true,'fourth':true,'close':open4}">
+			<view class="list-title"  @click="open4=!open4">
 				<view class="circle"></view>
 				<view class="title">不重要不紧急</view>
-				<image class="open-icon logo" src="../../static/icon/up.svg"></image>
+				<image class="open-icon logo" src="/static/icon/up.svg"></image>
 				<view class="logo"></view>
+			</view>
+			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List4" :key="item.id">
+				<view class="r-wrap">
+					<view class="r" v-if="item.state==0"></view>
+					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
+				</view>
+				<text class="content">{{item.name}}</text>
+				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
 			</view>
 		</view>
 		<tab-bar :current="0"></tab-bar>
@@ -91,14 +79,24 @@
 
 <script>
 	import tabBar from '../../component/tabBar.vue';
-    import {reqAllList} from "../../api/index.js"
+	import moment from 'moment';
+	import {
+		reqAllList
+	} from "../../api/index.js"
 	export default {
-		components:{
+		components: {
 			tabBar
 		},
 		data() {
 			return {
-				isDone: true, //判断是否完成 暂时
+				List1: [],
+				List2: [],
+				List3: [],
+				List4: [],
+				open1: true,
+				open2: true,
+				open3: true,
+				open4: true,
 			}
 		},
 		mounted() {
@@ -106,14 +104,43 @@
 		},
 		methods: {
 			// 发送请求
-			getList(){
-				const token = uni.getStorageSync('token')
-				reqAllList(token).then(res=>{
-					console.log(res);
+			getList() {
+				reqAllList().then(res => {
+					let list = res.data.lists
+					list.forEach((item) => {
+						if (item.priority === 1) {
+							this.List1.push({
+								...item,
+								startTime: moment(item.startTime).format('hh:mm'),
+								endTime: moment(item.endTime).format('hh:mm')
+							})
+						}
+						if (item.priority === 2) {
+							this.List2.push({
+								...item,
+								startTime: moment(item.startTime).format('hh:mm'),
+								endTime: moment(item.endTime).format('hh:mm')
+							})
+						}
+						if (item.priority === 3) {
+							this.List3.push({
+								...item,
+								startTime: moment(item.startTime).format('hh:mm'),
+								endTime: moment(item.endTime).format('hh:mm')
+							})
+						}
+						if (item.priority === 4) {
+							this.List4.push({
+								...item,
+								startTime: moment(item.startTime).format('hh:mm'),
+								endTime: moment(item.endTime).format('hh:mm')
+							})
+						}
+					})
 				})
 			}
 		},
-	};
+	}
 </script>
 
 <style lang="less">
@@ -121,6 +148,11 @@
 		padding: 40rpx;
 		font-size: 28rpx;
 		background-color: #f1f2f3;
+	}
+
+	.close {
+		height: 80rpx;
+		transition: all .2s;
 	}
 
 	.logo {
@@ -185,6 +217,8 @@
 	}
 
 	.list-wrap {
+		overflow: hidden;
+		transition: all .2s;
 		width: 100%;
 		background-color: #fff;
 		margin-top: 30rpx;
@@ -211,7 +245,8 @@
 				padding-left: 70rpx;
 				font-weight: 700;
 			}
-			.open-icon{
+
+			.open-icon {
 				position: absolute;
 				right: 0;
 				top: 15rpx;
@@ -228,6 +263,7 @@
 			.r-wrap {
 				flex: 1;
 				padding-left: 15rpx;
+
 				.r {
 					margin-left: 4rpx;
 					width: 30rpx;

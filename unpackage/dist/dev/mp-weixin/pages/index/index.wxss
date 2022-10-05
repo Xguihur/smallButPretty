@@ -3,6 +3,10 @@
   font-size: 28rpx;
   background-color: #f1f2f3;
 }
+.close {
+  height: 80rpx;
+  transition: all 0.2s;
+}
 .logo {
   width: 40rpx;
   height: 40rpx;
@@ -56,6 +60,8 @@
   top: 12rpx;
 }
 .list-wrap {
+  overflow: hidden;
+  transition: all 0.2s;
   width: 100%;
   background-color: #fff;
   margin-top: 30rpx;
