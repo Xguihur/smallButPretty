@@ -450,10 +450,8 @@ var tabBar = function tabBar() {Promise.all(/*! require.ensure | component/tabBa
       var modifyData = { intro: val };console.log(modifyData);(0, _index.reqModifyMsg)(modifyData).then(function (res) {console.log(res);if (res.data.state === true) {uni.showToast({ icon: 'success', title: res.data.msg }); // 修改之后应该渲染数据
         } else {uni.showToast({ icon: 'error', title: res.data.msg });}});}, // 使用指南
     direction: function direction(type) {// 测试查看个人信息的接口
-      (0, _index.reqShowMsg)().then(function (res) {console.log(res);});console.log('使用指南');this.$refs.popupDirection.open(type);},
-    // 关于我们
-    aboutUs: function aboutUs(type) {
-      console.log('关于我们页面');
+      (0, _index.reqShowMsg)().then(function (res) {console.log(res);});console.log('使用指南');this.$refs.popupDirection.open(type);}, // 关于我们
+    aboutUs: function aboutUs(type) {console.log('关于我们页面');
       this.$refs.popupAboutUs.open(type);
     },
     // 改变 关于我们 或者 使用指南 的状态

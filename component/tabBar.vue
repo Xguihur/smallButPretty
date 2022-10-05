@@ -1,7 +1,7 @@
 <template>
 	<view class="tarbar">
 		<view
-			class=".tarbar-list"
+			class="tarbar-list"
 			:style="{
 				background: tabBar.backgroundColor,
 				color: tabBar.color,
@@ -376,7 +376,7 @@
 .tarbar-list {
 	position: relative;
 	width: 100%;
-	height: 400rpx;
+	height: 88rpx;
 	background: #4d586f;
 	position: fixed;
 	left: 0;
