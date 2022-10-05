@@ -26,19 +26,22 @@
   margin-left: 20rpx;
 }
 .lg-container .lg-input .lg-input-box.data-v-b237504c {
+  position: relative;
   display: flex;
 }
 .lg-container .lg-input .lg-input-box .lg-input-text.data-v-b237504c {
-  position: relative;
+  position: absolute;
   left: 88rpx;
-  top: 20rpx;
-  color: #ccc;
-  font-size: 38rpx;
+  top: 13%;
+  background-color: #ccc;
+  width: 2rpx;
+  height: 50rpx;
 }
 .lg-container .lg-input .lg-input-box .lg-input-logo.data-v-b237504c {
   width: 45rpx;
-  margin-top: 24rpx;
-  margin-right: -78rpx;
+  position: absolute;
+  top: 14.5%;
+  left: 35rpx;
 }
 .lg-container .lg-input .lg-input-box .lg-inputText.data-v-b237504c {
   border-radius: 50rpx;

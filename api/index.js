@@ -17,3 +17,8 @@ export const reqLogin = (loginForm) => {
 export const reqShowMsg = () => {
 	return request('/user/myinformation')
 }
+
+// 修改个人信息
+export const reqModifyMsg = (modifyData) => {
+	return request('/user/update',modifyData,'put')
+}

@@ -105,11 +105,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"component/tabBar":1,"uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog":1,"uni_modules/uni-popup/components/uni-popup/uni-popup":1};
+/******/ 		var cssChunks = {"component/tabBar":1,"uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog":1,"uni_modules/uni-popup/components/uni-popup/uni-popup":1,"uni_modules/uni-calendar/components/uni-calendar/uni-calendar":1,"uni_modules/uni-calendar/components/uni-calendar/uni-calendar-item":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"component/tabBar":"component/tabBar","uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog":"uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog","uni_modules/uni-popup/components/uni-popup/uni-popup":"uni_modules/uni-popup/components/uni-popup/uni-popup","uni_modules/uni-transition/components/uni-transition/uni-transition":"uni_modules/uni-transition/components/uni-transition/uni-transition"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"component/tabBar":"component/tabBar","uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog":"uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog","uni_modules/uni-popup/components/uni-popup/uni-popup":"uni_modules/uni-popup/components/uni-popup/uni-popup","uni_modules/uni-calendar/components/uni-calendar/uni-calendar":"uni_modules/uni-calendar/components/uni-calendar/uni-calendar","uni_modules/uni-transition/components/uni-transition/uni-transition":"uni_modules/uni-transition/components/uni-transition/uni-transition","uni_modules/uni-calendar/components/uni-calendar/uni-calendar-item":"uni_modules/uni-calendar/components/uni-calendar/uni-calendar-item"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

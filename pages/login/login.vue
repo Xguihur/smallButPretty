@@ -13,7 +13,7 @@
 					src="../../static/icon/my.svg"
 					mode="widthFix"
 				></image>
-				<text class="lg-input-text">|</text>
+				<view class="lg-input-text"></view>
 				<input
 					class="uni-input lg-inputText"
 					focus
@@ -27,7 +27,7 @@
 					src="../../static/icon/lock.svg"
 					mode="widthFix"
 				></image>
-				<text class="lg-input-text">|</text>
+				<view class="lg-input-text"></view>
 				<input
 					class="uni-input lg-inputText"
 					focus
@@ -43,10 +43,10 @@
 			<view class="lg-input-box">
 				<image
 					class="lg-input-logo"
-					src="../../static/icon/my.svg"
+					src="/static/icon/my.svg"
 					mode="widthFix"
 				></image>
-				<text class="lg-input-text">|</text>
+				<view class="lg-input-text"></view>
 				<input
 					class="uni-input lg-inputText"
 					focus
@@ -57,10 +57,10 @@
 			<view class="lg-input-box">
 				<image
 					class="lg-input-logo"
-					src="../../static/icon/lock.svg"
+					src="/static/icon/lock.svg"
 					mode="widthFix"
 				></image>
-				<text class="lg-input-text">|</text>
+				<view class="lg-input-text"></view>
 				<input
 					class="uni-input lg-inputText"
 					focus
@@ -129,31 +129,6 @@ export default {
 				registerForm.password = this.password
 				console.log(registerForm)
 				// 执行接口
-				// reqRegister(registerForm).then(res => {
-				// 	// console.log(res)
-				// 	if (res) {
-				// 		if (res.status === 200) {
-				// 			if (res.data.state) {
-				// 				// 注册成功
-				// 				uni.showToast({
-				// 					icon: 'success',
-				// 					title: res.data.msg
-				// 				})
-				// 				this.regOrSign = 1
-				// 			} else {
-				// 				// 注册失败
-				// 				uni.showToast({
-				// 					icon: 'error',
-				// 					title: res.data.msg
-				// 				})
-				// 			}
-				// 		} else {
-				// 			console.log('res.status:', res.status)
-				// 		}
-				// 	} else {
-				// 		console.log('res不存在')
-				// 	}
-				// })
 				reqRegister(registerForm).then(res => {
 						if (res) {
 							if (res.statusCode === 200) {
@@ -163,7 +138,10 @@ export default {
 										icon: 'success',
 										title: res.data.msg
 									})
-									this.regOrSign = 1
+									setTimeout(() => {
+										this.regOrSign = 1
+									}, 800)
+									
 								} else {
 									// 注册失败
 									uni.showToast({
@@ -261,19 +239,24 @@ export default {
 		margin-bottom: 100rpx;
 		margin-left: 20rpx;
 
+
 		.lg-input-box {
+					position: relative;
 			display: flex;
+			
 			.lg-input-text {
-				position: relative;
+				position: absolute;
 				left: 88rpx;
-				top: 20rpx;
-				color: #ccc;
-				font-size: 38rpx;
+				top: 13%;
+				background-color: #ccc;
+				width: 2rpx;
+				height: 50rpx;
 			}
 			.lg-input-logo {
 				width: 45rpx;
-				margin-top: 24rpx;
-				margin-right: -78rpx;
+				position: absolute;
+				top: 14.5%;
+				left: 35rpx;
 			}
 			.lg-inputText {
 				border-radius: 50rpx;
