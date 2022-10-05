@@ -85,6 +85,7 @@
 </template>
 
 <script>
+	import moment from "moment"
 	import {
 		reqAddList
 	} from "../api/index.js"
@@ -143,8 +144,16 @@
 				}
 			},
 			// 打开添加列表
-			addList() {
-				this.$refs.addList.open()
+			addList(item) {
+				if(item.type){
+					this.$refs.addList.open()
+				}else{
+					this.$refs.addList.open()
+					this.form = item
+					this.showStarTime = moment(item.starTime).format('hh:mm')
+					this.showEndTime = item.endTime
+				}
+
 			},
 			//打开任务状态列表
 			openFlag() {
@@ -199,7 +208,6 @@
 			},
 			//提交事件
 			submit() {
-				const token = uni.getStorageSync('token')
 				let {name,description,startTime,endTime,priority} = this.form
 				if(!name){
 					uni.showToast({

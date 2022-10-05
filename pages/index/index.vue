@@ -11,12 +11,13 @@
 			</view>
 		</view>
 		<view :class="{'list-wrap':true,'first':true,'close':open1}">
-			<view class="list-title"  @click="open1=!open1">
+			<view class="list-title" @click="open1=!open1">
 				<view class="circle"></view>
 				<view class="title">重要且紧急</view>
 				<image class="open-icon logo" src="/static/icon/up.svg"></image>
 			</view>
-			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List1" :key="item.id">
+			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in List1" :key="item.id"
+				@click="itemClick(item)">
 				<view class="r-wrap">
 					<view class="r" v-if="item.state==0"></view>
 					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
@@ -25,7 +26,7 @@
 				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
 			</view>
 		</view>
-		<view :class="{'list-wrap':true,'second':true,'close':open2}" >
+		<view :class="{'list-wrap':true,'second':true,'close':open2}">
 			<view class="list-title" @click="open2=!open2">
 				<view class="circle"></view>
 				<view class="title">重要但不紧急</view>
@@ -41,7 +42,7 @@
 				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
 			</view>
 		</view>
-	<view :class="{'list-wrap':true,'third':true,'close':open3}" >
+		<view :class="{'list-wrap':true,'third':true,'close':open3}">
 			<view class="list-title" @click="open3=!open3">
 				<view class="circle"></view>
 				<view class="title">不重要但紧急</view>
@@ -57,8 +58,8 @@
 				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
 			</view>
 		</view>
-	<view :class="{'list-wrap':true,'fourth':true,'close':open4}">
-			<view class="list-title"  @click="open4=!open4">
+		<view :class="{'list-wrap':true,'fourth':true,'close':open4}">
+			<view class="list-title" @click="open4=!open4">
 				<view class="circle"></view>
 				<view class="title">不重要不紧急</view>
 				<image class="open-icon logo" src="/static/icon/up.svg"></image>
@@ -73,7 +74,7 @@
 				<text class="time">{{item.startTime}}~{{item.endTime}}</text>
 			</view>
 		</view>
-		<tab-bar :current="0"></tab-bar>
+		<tab-bar :current="0" ref="tabBars"></tab-bar>
 	</view>
 </template>
 
@@ -106,40 +107,50 @@
 			// 发送请求
 			getList() {
 				reqAllList().then(res => {
-					let list = res.data.lists
-					list.forEach((item) => {
-						if (item.priority === 1) {
-							this.List1.push({
-								...item,
-								startTime: moment(item.startTime).format('hh:mm'),
-								endTime: moment(item.endTime).format('hh:mm')
-							})
-						}
-						if (item.priority === 2) {
-							this.List2.push({
-								...item,
-								startTime: moment(item.startTime).format('hh:mm'),
-								endTime: moment(item.endTime).format('hh:mm')
-							})
-						}
-						if (item.priority === 3) {
-							this.List3.push({
-								...item,
-								startTime: moment(item.startTime).format('hh:mm'),
-								endTime: moment(item.endTime).format('hh:mm')
-							})
-						}
-						if (item.priority === 4) {
-							this.List4.push({
-								...item,
-								startTime: moment(item.startTime).format('hh:mm'),
-								endTime: moment(item.endTime).format('hh:mm')
-							})
-						}
-					})
+					if (res.data.lists) {
+						let list = res.data.lists
+						list.forEach((item) => {
+							if (item.priority === 1) {
+								this.List1.push({
+									...item,
+									startTime: moment(item.startTime).format('hh:mm'),
+									endTime: moment(item.endTime).format('hh:mm')
+								})
+							}
+							if (item.priority === 2) {
+								this.List2.push({
+									...item,
+									startTime: moment(item.startTime).format('hh:mm'),
+									endTime: moment(item.endTime).format('hh:mm')
+								})
+							}
+							if (item.priority === 3) {
+								this.List3.push({
+									...item,
+									startTime: moment(item.startTime).format('hh:mm'),
+									endTime: moment(item.endTime).format('hh:mm')
+								})
+							}
+							if (item.priority === 4) {
+								this.List4.push({
+									...item,
+									startTime: moment(item.startTime).format('hh:mm'),
+									endTime: moment(item.endTime).format('hh:mm')
+								})
+							}
+						})
+					}
 				})
+				if (this.List1) this.open1 = false
+				if (this.List2) this.open2 = false
+				if (this.List3) this.open3 = false
+				if (this.List4) this.open4 = false
+				console.log(this.List1);
+			},
+			itemClick(item) {
+				this.$refs.tabBars.addList(item)
 			}
-		},
+		},     
 	}
 </script>
 
@@ -151,7 +162,7 @@
 	}
 
 	.close {
-		height: 80rpx;
+		height: 60rpx;
 		transition: all .2s;
 	}
 
