@@ -9,14 +9,13 @@
 				<image class="search logo" src="/static/icon/search.svg"></image>
 			</view>
 		</view>
-		<view :class="{'list-wrap':true,'first':true,'close':open1}">
-				<view class="list-title" @click="ani">
+		<view :class="{'list-wrap':true,'first':true}" :style="{maxHeight:openHeight1}">
+			<view class="wrap" ref="open1">
+				<view class="list-title" @click="open(1)">
 					<view class="circle"></view>
 					<view class="title">重要且紧急</view>
-					<image class="open-icon logo" src="/static/icon/up.svg" v-if="!open1"></image>
-					<image class="open-icon logo" src="/static/icon/down.svg" v-else></image>
+					<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':open1}"></image>
 				</view>
-	<uni-transition ref="ani" :show="open1" modeClass="fade" >
 				<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list1" :key="item.id">
 					<view class="r-wrap" @click="swichClick(item)">
 						<view class="r" v-show="item.state==0"></view>
@@ -26,14 +25,14 @@
 					<text class="time"
 						@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
 				</view>
-			</uni-transition>
+			</view>
 		</view>
-		<view :class="{'list-wrap':true,'second':true,'close':open2}">
-			<view class="list-title" @click="open2=!open2">
+		<view :class="{'list-wrap':true,'second':true}" :style="{maxHeight:openHeight2}">
+			<view class="wrap" ref="open2">
+			<view class="list-title" @click="open(2)">
 				<view class="circle"></view>
 				<view class="title">不重要但紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg" v-if="!open2"></image>
-				<image class="open-icon logo" src="/static/icon/down.svg" v-else></image>
+				<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':open2}"></image>
 				<view class="logo"></view>
 			</view>
 			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list2" :key="item.id">
@@ -45,13 +44,14 @@
 				<text class="time"
 					@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
 			</view>
+			</view>
 		</view>
-		<view :class="{'list-wrap':true,'third':true,'close':open3}">
-			<view class="list-title" @click="open3=!open3">
+		<view :class="{'list-wrap':true,'third':true}" :style="{maxHeight:openHeight3}">
+			<view class="wrap" ref="open3">
+			<view class="list-title" @click="open(3)">
 				<view class="circle"></view>
 				<view class="title">重要但不紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg" v-if="!open3"></image>
-				<image class="open-icon logo" src="/static/icon/down.svg" v-else></image>
+				<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':open3}"></image>
 				<view class="logo"></view>
 			</view>
 			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list3" :key="item.id">
@@ -63,13 +63,15 @@
 				<text class="time"
 					@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
 			</view>
+			</view>
 		</view>
-		<view :class="{'list-wrap':true,'fourth':true,'close':open4}">
-			<view class="list-title" @click="open4=!open4">
+		<view :class="{'list-wrap':true,'fourth':true}"  :style="{maxHeight:openHeight4}">
+			<view class="wrap" ref="open4">
+			<view class="list-title" @click="open(4)">
 				<view class="circle"></view>
 				<view class="title">不重要不紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg" v-if="!open4"></image>
-				<image class="open-icon logo" src="/static/icon/down.svg" v-else></image>
+				<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':open4}"></image>
+
 				<view class="logo"></view>
 			</view>
 			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list4" :key="item.id">
@@ -80,6 +82,7 @@
 				<text class="content" @click="itemClick(item)">{{item.name}}</text>
 				<text class="time"
 					@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
+			</view>
 			</view>
 			<tab-bar :current="0" ref="tabBars" @fresh="getList"></tab-bar>
 		</view>
@@ -107,6 +110,10 @@
 				open2: false,
 				open3: false,
 				open4: false,
+				openHeight1: '5000rpx',
+				openHeight2: '5000rpx',
+				openHeight3: '5000rpx',
+				openHeight4: '5000rpx',
 				btnContent: "今日",
 				btnFlag: true
 			}
@@ -116,9 +123,45 @@
 			this.getList(0)
 		},
 		methods: {
-			ani() {
-				this.open1 = !this.open1
-				this.$refs.ani.run()
+			open(e) {
+				
+				if (e == 1) {
+					let height = this.$refs.open1.$el.offsetHeight
+					if (this.open1) {
+						this.openHeight1 = height + height + 'rpx'
+						this.open1 = !this.open1
+					} else {
+						this.openHeight1 = '60rpx'
+						this.open1 = !this.open1
+					}
+				}else if (e==2){
+					let height = this.$refs.open2.$el.offsetHeight
+					if (this.open2) {
+						this.openHeight2 = height + height+ 'rpx'
+						this.open2 = !this.open2
+					} else {
+						this.openHeight2 = '60rpx'
+						this.open2 = !this.open2
+					}
+				}else if (e==3){
+					let height = this.$refs.open3.$el.offsetHeight
+					if (this.open3) {
+						this.openHeight3 = height + height + 'rpx' 
+						this.open3 = !this.open3
+					} else {
+						this.openHeight3 = '60rpx'
+						this.open3 = !this.open3
+					}
+				}else if (e==4){
+					let height = this.$refs.open4.$el.offsetHeight
+					if (this.open4) {
+						this.openHeight4 = height + height + 'rpx'
+						this.open4 = !this.open4
+					} else {
+						this.openHeight4 = '60rpx'
+						this.open4 = !this.open4
+					}
+				}
 			},
 			// 发送请求
 			getList(e) {
@@ -178,16 +221,21 @@
 				} = item
 				if (state == 0) {
 					state = 1
+					item.state = 1
 				} else {
 					state = 0
+					item.state = 0
 				}
 				let changeForm = {
 					id,
 					state
 				}
 				reqChangeList(changeForm).then(() => {
-					this.getList()
-
+					if (this.btnFlag) {
+						this.getList(0)
+					} else {
+						this.getList(1)
+					}
 				})
 			},
 			btnClick() {
@@ -214,12 +262,14 @@
 		background-color: #f1f2f3;
 	}
 
-	.close {}
+	.rotating {
+		transform: rotate(180deg);
+	}
 
 	.logo {
 		width: 40rpx;
 		height: 40rpx;
-		transition: all .2s;
+		transition: all .1s;
 
 		&:hover {
 			width: 50rpx;
@@ -287,10 +337,13 @@
 	.list-wrap {
 		overflow: hidden;
 		width: 100%;
+		transition: all .5s;
 		background-color: #fff;
 		margin-top: 30rpx;
 		border-radius: 25rpx;
 		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+		&.close {}
 
 		.list-title {
 			position: relative;
@@ -337,7 +390,7 @@
 					margin-left: 4rpx;
 					width: 30rpx;
 					height: 30rpx;
-					transition: all .2s;
+					transition: all .1s;
 					position: absolute;
 					top: 50%;
 					transform: translate(0, -50%);
