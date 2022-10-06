@@ -84,7 +84,7 @@
 				></uni-popup-dialog>
 			</uni-popup>
 			<!-- 确认密码 -->
-			<uni-popup ref="inputDialogPasswordTwo" type="dialog" @change="watchPasswordState">
+			<uni-popup ref="inputDialogPasswordTwo" type="dialog">
 				<uni-popup-dialog
 					ref="inputClose"
 					mode="input"
@@ -92,6 +92,7 @@
 					value=""
 					placeholder="请再次确认密码"
 					@confirm="dialogInputPasswordTwoConfirm"
+					@close="watchPasswordState"
 				></uni-popup-dialog>
 			</uni-popup>
 
@@ -139,6 +140,28 @@
 						关于我们的关于我们，但是关于我们的关于我们不是我们的关于我们。
 					</view>
 				</view>
+			</uni-popup>
+			
+			<!-- 注销用户 -->
+			<view class="my-func-item" @click="deleteUser()">
+				<view class="my-item-content">
+					<image
+						class="my-title-img"
+						src="../../static/icon/rename.svg"
+						mode="widthFix"
+					></image>
+					<view class="my-text-content">注销用户</view>
+				</view>
+			</view>
+			<uni-popup ref="inputDeleteUser" type="dialog">
+				<uni-popup-dialog
+					ref="inputClose"
+					mode="input"
+					title="注销用户"
+					value=""
+					placeholder="请输入您的密码"
+					@confirm="inputDialogDeleteConfirm"
+				></uni-popup-dialog>
 			</uni-popup>
 		</view>
 
@@ -214,7 +237,14 @@ export default {
 				}
 			})
 		},
-
+		// 注销用户
+		deleteUser() {
+			console.log('注销用户')
+			this.$refs.inputDeleteUser.open()
+		},
+		inputDialogDeleteConfirm(val) {
+			console.log(val)
+		},
 		// 修改用户名
 		changeUsername() {
 			console.log('修改用户名')
@@ -315,12 +345,9 @@ export default {
 			}
 		},
 		// 第二次输入密码时点击取消的状态
-		watchPasswordState(e){
-			// console.log('当前模式：' + e.type + ',状态：' + e.show)
-			// 用户点击取消或者确定都清空当前data中的新密码
-			if(!e.show){
-				this.newPassword = ''
-			}
+		watchPasswordState(){
+			// 用户点击取消清空当前data中的新密码
+			this.newPassword = ''
 		},
 		// 修改个性签名
 		changeMotto() {
