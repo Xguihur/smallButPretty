@@ -1,11 +1,9 @@
 <template>
 	<view class="container">
 		<view class="tab-bar">
-			<view class="logo-wrap">
-				<text>OneList</text>
-			</view>
-			<view class="search-wrap">
-				<input type="text" placeholder="搜索计划">
+			<view class="logo-wrap"><text>OneList</text></view>
+			<view class="search-wrap" @click="searchClick()">
+				<input type="text" placeholder="搜索计划" />
 				<image class="search logo" src="/static/icon/search.svg"></image>
 			</view>
 		</view>
@@ -20,12 +18,17 @@
 
 				<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list1" :key="item.id">
 					<view class="r-wrap" @click="swichClick(item)">
-						<view class="r" v-show="item.state==0"></view>
-						<image src="/static/icon/yes.svg" v-show="item.state==1" mode="widthFix" class="logo"></image>
+						<view class="r" v-show="item.state == 0"></view>
+						<image src="/static/icon/yes.svg" v-show="item.state == 1" mode="widthFix" class="logo"></image>
 					</view>
-					<text class="content" @click="itemClick(item)">{{item.name}}</text>
-					<text class="time"
-						@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
+					<text class="content" @click="itemClick(item)">{{ item.name }}</text>
+					<text class="time" @click="itemClick(item)">
+						{{
+							item.startTime === item.endTime
+								? item.showStartTime
+								: `${item.showStartTime}~${item.showEndTime}`
+						}}
+					</text>
 				</view>
 			</view>
 		</view>
@@ -91,7 +94,7 @@
 			</view>
 			<tab-bar :current="0" ref="tabBars" @fresh="getList"></tab-bar>
 		</view>
-		<view class="btn" @click="btnClick()">{{btnContent}}</view>
+		<view class="btn" @click="btnClick()">{{ btnContent }}</view>
 	</view>
 </template>
 
@@ -133,6 +136,11 @@
 			this.getList(0)
 		},
 		methods: {
+			searchClick() {
+				uni.navigateTo({
+					url: "/pages/search/search"
+				})
+			},
 			async open(e) {
 				const query = uni.createSelectorQuery().in(this)
 
@@ -147,15 +155,12 @@
 				}
 				const height = await getHeight(e)
 				const target = this.wrap[e]
-				//?
-				target.isOpen = !target.isOpen 
+				target.isOpen = !target.isOpen
 				if (target.isOpen) {
 					target.openHeight = height * 2 + 'rpx'
 				} else {
 					target.openHeight = '60rpx'
 				}
-				//?
-
 			},
 			// 发送请求
 			getList(e) {
@@ -166,7 +171,7 @@
 							list1: [],
 							list2: [],
 							list3: [],
-							list4: [],
+							list4: []
 						}
 						list.forEach((item) => {
 							this.state[`list${item.priority}`].push({
@@ -183,14 +188,14 @@
 							list1: [],
 							list2: [],
 							list3: [],
-							list4: [],
+							list4: []
 						}
-						let afterList = list.filter((item) => {
+						let afterList = list.filter(item => {
 							return item.startTime !== item.endTime ?
 								moment().isBetween(item.startTime, item.endTime) :
 								moment().isSame(item.startTime, 'day')
 						})
-						afterList.forEach((item) => {
+						afterList.forEach(item => {
 							this.state[`list${item.priority}`].push({
 								...item,
 								showStartTime: moment(item.startTime).format('HH:mm'),
@@ -208,7 +213,6 @@
 				}
 			},
 			swichClick(item) {
-				console.log(item);
 				let {
 					id,
 					state,
@@ -232,19 +236,45 @@
 					}
 				})
 			},
+			itemClick(item) {
+				if (item.state == 0) {
+					this.$refs.tabBars.addList(item)
+				} else {
+					return
+				}
+			},
+			swichClick(item) {
+				let {
+					id,
+					state
+				} = item
+				if (state == 0) {
+					state = 1
+					item.state = 1
+				} else {
+					state = 0
+					item.state = 0
+				}
+				let changeForm = {
+					id,
+					state
+				}
+				reqChangeList(changeForm).then(() => {
+					this.getList()
+				})
+			},
 			btnClick() {
 				if (this.btnFlag) {
 					this.getList(1)
-					this.btnContent = "全部"
+					this.btnContent = '全部'
 					this.btnFlag = false
 				} else {
 					this.getList(0)
-					this.btnContent = "今日"
+					this.btnContent = '今日'
 					this.btnFlag = true
 				}
-
-			}
-		},
+			},
+		}
 	}
 </script>
 
@@ -256,41 +286,34 @@
 		background-color: #f1f2f3;
 	}
 
-	.rotating {
-		transform: rotate(180deg);
-	}
-
 	.logo {
 		width: 40rpx;
 		height: 40rpx;
-		transition: all .1s;
+		transition: all 0.2s;
 
 		&:hover {
 			width: 50rpx;
 			height: 50rpx;
 		}
+
 	}
 
+	.rotating {
+		transform: rotate(180deg);
+	}
 
 	.tab-bar {
 		display: flex;
-		justify-content: space-between;
 
 		.logo-wrap {
 			flex: 1;
-			text-align: center;
 
-			.one-list {
-				width: 55rpx;
-				height: 55rpx;
+			text {
+				color: #2643fc;
+				font-size: 40rpx;
+				line-height: 60rpx;
+				font-weight: 700;
 			}
-		}
-
-		text {
-			color: #2643FC;
-			font-size: 40rpx;
-			line-height: 60rpx;
-			font-weight: 700;
 		}
 
 		.search-wrap {
@@ -331,74 +354,66 @@
 	.list-wrap {
 		overflow: hidden;
 		width: 100%;
-		transition: all .5s;
 		background-color: #fff;
 		margin-top: 30rpx;
 		border-radius: 25rpx;
+		transition: all .5s;
 		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
-		&.close {}
+		.wrap {
+			.list-title {
+				position: relative;
+				width: 90%;
+				margin: 0 auto;
+				height: 50rpx;
+				padding-top: 10rpx;
+				border-bottom: 1rpx solid #d8d8d8;
 
-		.list-title {
-			position: relative;
-			width: 90%;
-			margin: 0 auto;
-			height: 50rpx;
-			padding-top: 10rpx;
-			border-bottom: 1rpx solid #d8d8d8;
+				.circle {
+					width: 40rpx;
+					height: 40rpx;
+					float: left;
+					border-radius: 100%;
+				}
 
-			.circle {
-				width: 40rpx;
-				height: 40rpx;
-				float: left;
-				border-radius: 100%;
-			}
+				.title {
+					line-height: 40rpx;
+					padding-left: 70rpx;
+					font-weight: 700;
+				}
 
-			.title {
-				line-height: 40rpx;
-				padding-left: 70rpx;
-				font-weight: 700;
-			}
-
-			.open-icon {
-				position: absolute;
-				right: 0;
-				top: 15rpx;
+				.open-icon {
+					position: absolute;
+					right: 0;
+					top: 15rpx;
+				}
 			}
 		}
 
 		.list-item {
+			height: 60rpx;
 			display: flex;
-			padding: 0 25rpx;
-			margin: 20rpx, 0;
-			height: 80rpx;
-			line-height: 80rpx;
-			justify-content: space-around;
+			line-height: 60rpx;
+			font-size: 30rpx;
+			padding: 20rpx;
 
 			.r-wrap {
 				flex: 2;
-				padding-left: 15rpx;
 				position: relative;
 
 				.r {
-					margin-left: 4rpx;
+					position: absolute;
+					top: 50%;
+					transform: translate(50%, -50%);
 					width: 30rpx;
 					height: 30rpx;
 					transition: all .1s;
-					position: absolute;
-					top: 50%;
-					transform: translate(0, -50%);
 
 					&:hover {
-						width: 40rpx;
-						height: 40rpx;
+						width: 35rpx;
+						height: 35rpx;
+						transform: translate(45%, -50%);
 					}
-				}
-
-				image {
-					position: absolute;
-					top: 50%;
-					transform: translate(0, -50%);
 				}
 			}
 
@@ -414,20 +429,32 @@
 			.time {
 				flex: 4;
 				font-size: 22rpx;
-				line-height: 80rpx;
+				line-height: 60rpx;
 				text-align: center;
-				color: #82B3E2;
+				color: #82b3e2;
 			}
 
 			&.done {
 				.r-wrap {
-					.r {
-						border: none !important;
+					image {
+						position: absolute;
+						width: 40rpx;
+						height: 40rpx;
+						transition: all .1s;
+						position: absolute;
+						top: 50%;
+						transform: translate(35%, -50%);
+
+						&:hover {
+							width: 50rpx;
+							height: 50rpx;
+							transform: translate(20%, -50%);
+						}
 					}
 				}
 
 				.content {
-					color: #A1A1A1;
+					color: #a1a1a1;
 				}
 
 				.time {
@@ -435,83 +462,83 @@
 				}
 			}
 		}
+	}
 
-		&.first {
-			.list-title {
-				.circle {
-					background-color: #df2e2e;
-				}
-
-				.title {
-					color: #df2e2e;
-				}
+	&.first {
+		.list-title {
+			.circle {
+				background-color: #df2e2e;
 			}
 
-			.list-item {
-				.r-wrap {
-					.r {
-						border: 2rpx solid #df2e2e;
-					}
-				}
+			.title {
+				color: #df2e2e;
 			}
 		}
 
-		&.second {
-			.list-title {
-				.circle {
-					background-color: #FFB000;
-				}
-
-				.title {
-					color: #FFB000;
-				}
-			}
-
-			.list-item {
-				.r-wrap {
-					.r {
-						border: 2rpx solid #FFB000;
-					}
+		.list-item {
+			.r-wrap {
+				.r {
+					border: 2rpx solid #df2e2e;
 				}
 			}
 		}
+	}
 
-		&.third {
-			.list-title {
-				.circle {
-					background-color: #4772FA;
-				}
-
-				.title {
-					color: #4772FA;
-				}
+	&.second {
+		.list-title {
+			.circle {
+				background-color: #ffb000;
 			}
 
-			.list-item {
-				.r-wrap {
-					.r {
-						border: 2rpx solid #4772FA;
-					}
-				}
+			.title {
+				color: #ffb000;
 			}
 		}
 
-		&.fourth {
-			.list-title {
-				.circle {
-					background-color: #A3A3A3;
-				}
-
-				.title {
-					color: #A3A3A3;
+		.list-item {
+			.r-wrap {
+				.r {
+					border: 2rpx solid #ffb000;
 				}
 			}
+		}
+	}
 
-			.list-item {
-				.r-wrap {
-					.r {
-						border: 2rpx solid #A3A3A3;
-					}
+	&.third {
+		.list-title {
+			.circle {
+				background-color: #4772fa;
+			}
+
+			.title {
+				color: #4772fa;
+			}
+		}
+
+		.list-item {
+			.r-wrap {
+				.r {
+					border: 2rpx solid #4772fa;
+				}
+			}
+		}
+	}
+
+	&.fourth {
+		.list-title {
+			.circle {
+				background-color: #a3a3a3;
+			}
+
+			.title {
+				color: #a3a3a3;
+			}
+		}
+
+		.list-item {
+			.r-wrap {
+				.r {
+					border: 2rpx solid #a3a3a3;
 				}
 			}
 		}
@@ -520,7 +547,7 @@
 	.btn {
 		height: 100rpx;
 		width: 100rpx;
-		background-color: #2643FC;
+		background-color: #2643fc;
 		border-radius: 100%;
 		position: fixed;
 		bottom: 200rpx;
@@ -528,6 +555,15 @@
 		line-height: 100rpx;
 		text-align: center;
 		color: #fff;
+		transition: all .2s;
 		box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+		&:hover {
+			height: 110rpx;
+			width: 110rpx;
+			line-height: 110rpx;
+			bottom: 195rpx;
+			right: 15rpx;
+		}
 	}
 </style>

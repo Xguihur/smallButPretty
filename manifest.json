@@ -40,41 +40,25 @@
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ]
             },
-            "ios" : {},
+            "ios" : {
+                "dSYMs" : false
+            },
             /* ios打包配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "ad" : {}
+            }
         }
     },
     /* SDK配置 */
     "quickapp" : {},
     /* 快应用特有相关 */
     "mp-weixin" : {
-        "appid" : "wxb93207a357a21c3e",
+        /* 小程序特有相关 */
+        "appid" : "",
         "setting" : {
             "urlCheck" : false
         },
         "usingComponents" : true
     }
 }
-// H 5
-// "h5":{
-// 	"router":{
-// 		"base":"/H5/",
-// 		"mode":"hash"
-// 	},
-// 	"devServer":{
-// 		"port":8080,
-// 		"disableHostCheck":true,//设置跳过host检查
-// 		"proxy":{
-// 			"/api":{
-// 				"target":"http://8.130.38.74:6661",
-// 				"changeOrigin":true,//是否跨域
-// 				"secure":false,//设置支持https协议的代理
-// 				"pathRewrite":{
-// 					"^/api":"/"
-// 				}
-// 			}
-// 		}
-// 	}
-// }
 
