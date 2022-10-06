@@ -150,6 +150,19 @@ export default {
 		tabBar
 	},
 	methods: {
+		initPersonMsg(){
+			// 初始化用户名和签名
+			reqShowMsg().then(res=>{
+				console.log(res)
+				if(res&&res.statusCode === 200){
+					if(res.data.state){
+						
+				this.nickName = res.data.user.nickname
+				this.motto = res.data.user.intro
+					}
+				}
+			})
+		},
 		// 登出
 		signOut() {
 			uni.showModal({
@@ -197,7 +210,6 @@ export default {
 		},
 		dialogInputUsernameConfirm(val) {
 			console.log(val)
-
 			const modifyData = {
 				nickname: val
 			}
@@ -211,6 +223,7 @@ export default {
 						title: res.data.msg
 					})
 					// 修改之后应该重新渲染一下数据
+					this.initPersonMsg()
 				} else {
 					uni.showToast({
 						icon: 'error',
@@ -242,6 +255,16 @@ export default {
 						title: res.data.msg
 					})
 					// 修改之后应该退出登陆
+					uni.setStorageSync('token', '')
+					uni.showToast({
+						icon: 'success',
+						title: '修改密码成功！'
+					})
+					setTimeout(() => {
+						uni.navigateTo({
+							url: '/pages/login/login'
+						})
+					}, 800)
 				} else {
 					uni.showToast({
 						icon: 'error',
@@ -272,6 +295,7 @@ export default {
 						title: res.data.msg
 					})
 					// 修改之后应该渲染数据
+					this.initPersonMsg()
 				} else {
 					uni.showToast({
 						icon: 'error',
@@ -300,6 +324,9 @@ export default {
 		change(e) {
 			console.log('当前模式：' + e.type + ',状态：' + e.show)
 		}
+	},
+	onShow(){
+		this.initPersonMsg()
 	}
 }
 </script>
