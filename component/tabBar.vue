@@ -1,8 +1,6 @@
 <template>
 	<view class="tarbar">
-		<view
-			class="tarbar-list"
-			:style="{
+		<view class="tarbar-list" :style="{
 				background: tabBar.backgroundColor,
 				color: tabBar.color,
 				'border-top':
@@ -27,16 +25,16 @@
 			<view class="add-wrap">
 				<button size="mini" type="default" @click="submit">发布</button>
 				<input type="text" placeholder="准备做什么?" v-model="form.name" />
-				<textarea name="" id="" auto-height placeholder="描述一下吧!" v-model="form.description"></textarea>
+				<textarea name="" id="" placeholder="描述一下吧!" v-model="form.description"></textarea>
 				<view class="option-wrap">
-					<view class="item-calendar" @click="calendarClick(1)">
+					<view class="item-calendar" @click="calendarClick(0)">
 						<picker class="wrap" mode="time" value="" @change="canlendarStarChange"
 							@cancel="canlendarStarCancel">
 							<image src="/static/icon/calendar.svg" mode=""></image>
 							<text class="time">{{ showStarTime }}</text>
 						</picker>
 					</view>
-					<view class="item-calendar" @click="calendarClick(0)">
+					<view class="item-calendar" @click="calendarClick(1)">
 						<picker class="wrap" mode="time" value="" @change="canlendarEndChange"
 							@cancel="canlendarEndCancel">
 							<image src="/static/icon/calendar.svg" mode=""></image>
@@ -58,7 +56,7 @@
 			<view class="add-wrap">
 				<button size="mini" type="default" @click="change">修改</button>
 				<input type="text" placeholder="准备做什么?" v-model="changeForm.name" />
-				<textarea name="" id="" auto-height placeholder="描述一下吧!" v-model="changeForm.description"></textarea>
+				<textarea name="" id="" placeholder="描述一下吧!" v-model="changeForm.description"></textarea>
 				<view class="option-wrap">
 					<view class="item-calendar" @click="calendarClick(2)">
 						<picker class="wrap" mode="time" value="" @change="changeCanlendarStarChange"
@@ -93,11 +91,11 @@
 				</view>
 				<view class="item" @click="chooseType(2)">
 					<image src="/static/icon/flag-2.svg" mode=""></image>
-					<text style="color: #ffbb00;">重要但不紧急</text>
+					<text style="color: #ffbb00;">不重要但紧急</text>
 				</view>
 				<view class="item" @click="chooseType(3)">
 					<image src="/static/icon/flag-3.svg" mode=""></image>
-					<text style="color: #4772fa;">不重要但紧急</text>
+					<text style="color: #4772fa;">重要但不紧急</text>
 				</view>
 				<view class="item" @click="chooseType(4)">
 					<image src="/static/icon/flag-4.svg" mode=""></image>
@@ -113,11 +111,11 @@
 				</view>
 				<view class="item" @click="changeChooseType(2)">
 					<image src="/static/icon/flag-2.svg" mode=""></image>
-					<text style="color: #ffbb00;">重要但不紧急</text>
+					<text style="color: #ffbb00;">不重要但紧急</text>
 				</view>
 				<view class="item" @click="changeChooseType(3)">
 					<image src="/static/icon/flag-3.svg" mode=""></image>
-					<text style="color: #4772fa;">不重要但紧急</text>
+					<text style="color: #4772fa;">重要但不紧急</text>
 				</view>
 				<view class="item" @click="changeChooseType(4)">
 					<image src="/static/icon/flag-4.svg" mode=""></image>
@@ -125,14 +123,15 @@
 				</view>
 			</view>
 		</uni-popup>
-		<uni-calendar ref="calendar1" :insert="false" @confirm="StarConfirm" :showMonth="false" />
-		<uni-calendar ref="calendar0" :insert="false" @confirm="EndConfirm" :showMonth="false" />
+		<uni-calendar ref="calendar0" :insert="false" @confirm="StarConfirm" :showMonth="false" />
+		<uni-calendar ref="calendar1" :insert="false" @confirm="EndConfirm" :showMonth="false" />
 		<uni-calendar ref="calendar2" :insert="false" @confirm="changeStarConfirm" :showMonth="false" />
 		<uni-calendar ref="calendar3" :insert="false" @confirm="changeEndConfirm" :showMonth="false" />
 	</view>
 </template>
 
 <script>
+	import moment from "moment"
 	import {
 		reqAddList,
 		reqChangeList
@@ -193,6 +192,10 @@
 			addList(item) {
 				if (item.type) {
 					this.$refs.addList.open()
+					this.form.startTime = moment().format('YYYY-MM-DD HH:mm:ss');
+					this.form.endTime = this.form.startTime
+					console.log(this.form.startTime);
+
 				} else {
 					this.$refs.changeList.open()
 					this.changeForm = item
@@ -201,9 +204,9 @@
 					if (item.priority == 1) {
 						this.changePriority = "重要且紧急"
 					} else if (item.priority == 2) {
-						this.changePriority = "重要但不紧急"
-					} else if (item.priority == 3) {
 						this.changePriority = "不重要但紧急"
+					} else if (item.priority == 3) {
+						this.changePriority = "重要但不紧急"
 					} else if (item.priority == 4) {
 						this.changePriority = "不重要不紧急"
 					}
@@ -222,9 +225,9 @@
 				if (e == 1) {
 					this.priority = "重要且紧急"
 				} else if (e == 2) {
-					this.priority = "重要但不紧急"
-				} else if (e == 3) {
 					this.priority = "不重要但紧急"
+				} else if (e == 3) {
+					this.priority = "重要但不紧急"
 				} else if (e == 4) {
 					this.priority = "不重要不紧急"
 				}
@@ -235,9 +238,9 @@
 				if (e == 1) {
 					this.changePriority = "重要且紧急"
 				} else if (e == 2) {
-					this.changePriority = "重要但不紧急"
-				} else if (e == 3) {
 					this.changePriority = "不重要但紧急"
+				} else if (e == 3) {
+					this.changePriority = "重要但不紧急"
 				} else if (e == 4) {
 					this.changePriority = "不重要不紧急"
 				}
@@ -291,7 +294,7 @@
 			},
 			canlendarStarCancel() {
 				this.showPicker = false
-				this.form.starTime = undefined
+				this.form.startTime = undefined
 			},
 			canlendarEndCancel() {
 				this.showPicker = false
@@ -390,7 +393,6 @@
 						id,
 						state
 					}
-					console.log(changeForm);
 					reqChangeList(changeForm).then(res => {
 						uni.showToast({
 							title: res.msg,
@@ -408,8 +410,7 @@
 				}
 			}
 		},
-		mounted() {
-		},
+		mounted() {},
 		watch: {}
 	}
 </script>
@@ -442,7 +443,7 @@
 	.tarbar-list {
 		position: relative;
 		width: 100%;
-		height: 88rpx;
+		height: 100rpx;
 		background: #4d586f;
 		position: fixed;
 		left: 0;
@@ -476,8 +477,8 @@
 	}
 
 	.tarbar-list-li-icon image {
-		width: 50rpx;
-		height: 50rpx;
+		width: 60rpx;
+		height: 60rpx;
 	}
 
 	.tarbar-list-li-name {
@@ -494,15 +495,15 @@
 
 	.plus-wrap {
 		position: absolute;
-		width: 110rpx;
-		height: 110rpx;
+		width: 140rpx;
+		height: 140rpx;
 		background-color: #2643fc;
 		bottom: 3rpx;
 		left: 50%;
 		color: #fff;
 		font-size: 100rpx;
 		text-align: center;
-		line-height: 100rpx;
+		line-height: 130rpx;
 		border-radius: 100%;
 		transform: translate(-50%);
 	}
@@ -513,10 +514,11 @@
 		border-radius: 31rpx;
 		position: relative;
 
+		// height: 600rpx;
 		button {
 			position: absolute;
 			right: 70rpx;
-			top: 15rpx;
+			top: 30rpx;
 			z-index: 999;
 			background-color: #2643fc;
 			color: #fff;
@@ -532,7 +534,7 @@
 
 		textarea {
 			position: relative;
-			height: 300rpx;
+			height: 500rpx;
 			width: 80%;
 			border-top: 2px solid #efefef;
 			margin: 0 auto;
