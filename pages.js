@@ -9,6 +9,8 @@ module.exports = () => ({
 			"path": "pages/login/login"
 		}, {
 			"path": "pages/my/my"
+		},{
+			"path": "pages/search/search"
 		}
 	],
 	"tabBar": {
