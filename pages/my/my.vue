@@ -83,6 +83,17 @@
 					@confirm="dialogInputPasswordConfirm"
 				></uni-popup-dialog>
 			</uni-popup>
+			<!-- 确认密码 -->
+			<uni-popup ref="inputDialogPasswordTwo" type="dialog" @change="watchPasswordState">
+				<uni-popup-dialog
+					ref="inputClose"
+					mode="input"
+					title="确认密码"
+					value=""
+					placeholder="请再次确认密码"
+					@confirm="dialogInputPasswordTwoConfirm"
+				></uni-popup-dialog>
+			</uni-popup>
 
 			<!-- 使用指南 -->
 			<view class="my-func-item" @click="direction('center')">
@@ -131,7 +142,7 @@
 			</uni-popup>
 		</view>
 
-		<button type="warn" @click="signOut()">登出</button>
+		<button type="warn" @click="signOut()">退出登录</button>
 		<tab-bar :current="1"></tab-bar>
 	</view>
 </template>
@@ -143,7 +154,8 @@ export default {
 	data() {
 		return {
 			nickName: '用户名',
-			motto: '这个人很懒啥也不写...'
+			motto: '这个人很懒啥也不写...',
+			newPassword:''
 		}
 	},
 	components: {
@@ -167,7 +179,7 @@ export default {
 		signOut() {
 			uni.showModal({
 				title: '提示',
-				content: '是否确定登出？',
+				content: '是否确定退出登录？',
 				success: function(res) {
 					if (res.confirm) {
 						console.log('用户点击确定-登出')
@@ -240,38 +252,75 @@ export default {
 		},
 		dialogInputPasswordConfirm(val) {
 			console.log(val)
-
-			// 调用后端接口修改密码
-			const modifyData = {
-				password: val
+			if(val===''||val===null){
+				// 密码输入错误
+				uni.showToast({
+					icon:"error",
+					title:"密码不能为空！"
+				})
+			}else{
+				// 将第一次输入的密码存入data
+				this.newPassword = val
+				// 确认密码 弹出输入框
+										this.$refs.inputDialogPasswordTwo.open()
 			}
-			console.log(modifyData)
-
-			reqModifyMsg(modifyData).then(res => {
-				console.log(res)
-				if (res.data.state === true) {
-					uni.showToast({
-						icon: 'success',
-						title: res.data.msg
-					})
-					// 修改之后应该退出登陆
-					uni.setStorageSync('token', '')
-					uni.showToast({
-						icon: 'success',
-						title: '修改密码成功！'
-					})
-					setTimeout(() => {
-						uni.navigateTo({
-							url: '/pages/login/login'
-						})
-					}, 800)
-				} else {
-					uni.showToast({
-						icon: 'error',
-						title: res.data.msg
-					})
+		},
+		dialogInputPasswordTwoConfirm(val) {
+			console.log(val)
+			if(val===''||val===null){
+				// 密码输入错误
+				uni.showToast({
+					icon:"error",
+					title:"密码不能为空！"
+				})
+			}
+			else if(val === this.newPassword){
+				// 两次密码正确,调用后端接口修改密码
+				const modifyData = {
+					password: val
 				}
-			})
+				console.log(modifyData)
+						
+				reqModifyMsg(modifyData).then(res => {
+					console.log(res)
+					if (res.data.state === true) {
+						uni.showToast({
+							icon: 'success',
+							title: res.data.msg
+						})
+						// 修改之后应该退出登陆
+						uni.setStorageSync('token', '')
+						uni.showToast({
+							icon: 'success',
+							title: '修改密码成功！'
+						})
+						setTimeout(() => {
+							uni.navigateTo({
+								url: '/pages/login/login'
+							})
+						}, 800)
+					} else {
+						uni.showToast({
+							icon: 'error',
+							title: res.data.msg
+						})
+					}
+				})
+			}else{
+				// 密码输入错误
+				uni.showToast({
+					icon:"error",
+					title:"两次密码不一致！"
+				})
+			}
+		},
+		// 第二次输入密码时点击取消的状态
+		watchPasswordState(e){
+			// console.log('当前模式：' + e.type + ',状态：' + e.show)
+			// 用户点击取消或者确定都清空当前data中的新密码
+			if(!e.show){
+				this.newPassword = ''
+			}
 		},
 		// 修改个性签名
 		changeMotto() {
