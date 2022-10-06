@@ -30,7 +30,7 @@ export const reqAddList = (addForm) => {
 }
 //查询待办
 export const reqAllList = () => {
-	return request('/user/daylist')
+	return request('/user/allList')
 }
 //修改待办
 export const reqChangeList = (changeForm) => {
