@@ -9,13 +9,15 @@
 				<image class="search logo" src="/static/icon/search.svg"></image>
 			</view>
 		</view>
-		<view :class="{'list-wrap':true,'first':true}" :style="{maxHeight:openHeight1}">
-			<view class="wrap" ref="open1">
-				<view class="list-title" @click="open(1)">
+		<view :class="{'list-wrap':true,'first':true}" :style="{maxHeight:wrap[0].openHeight}">
+			<view class="wrap">
+				<view class="list-title" @click="open(0)">
 					<view class="circle"></view>
 					<view class="title">重要且紧急</view>
-					<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':open1}"></image>
+					<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':!wrap[0].isOpen}">
+					</image>
 				</view>
+
 				<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list1" :key="item.id">
 					<view class="r-wrap" @click="swichClick(item)">
 						<view class="r" v-show="item.state==0"></view>
@@ -27,62 +29,65 @@
 				</view>
 			</view>
 		</view>
-		<view :class="{'list-wrap':true,'second':true}" :style="{maxHeight:openHeight2}">
-			<view class="wrap" ref="open2">
-			<view class="list-title" @click="open(2)">
-				<view class="circle"></view>
-				<view class="title">不重要但紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':open2}"></image>
-				<view class="logo"></view>
-			</view>
-			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list2" :key="item.id">
-				<view class="r-wrap" @click="swichClick(item)">
-					<view class="r" v-if="item.state==0"></view>
-					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
+		<view :class="{'list-wrap':true,'second':true}" :style="{maxHeight:wrap[1].openHeight}">
+			<view class="wrap">
+				<view class="list-title" @click="open(1)">
+					<view class="circle"></view>
+					<view class="title">不重要但紧急</view>
+					<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':!wrap[1].isOpen}">
+					</image>
+					<view class="logo"></view>
 				</view>
-				<text class="content" @click="itemClick(item)">{{item.name}}</text>
-				<text class="time"
-					@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
-			</view>
+				<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list2" :key="item.id">
+					<view class="r-wrap" @click="swichClick(item)">
+						<view class="r" v-if="item.state==0"></view>
+						<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
+					</view>
+					<text class="content" @click="itemClick(item)">{{item.name}}</text>
+					<text class="time"
+						@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
+				</view>
 			</view>
 		</view>
-		<view :class="{'list-wrap':true,'third':true}" :style="{maxHeight:openHeight3}">
-			<view class="wrap" ref="open3">
-			<view class="list-title" @click="open(3)">
-				<view class="circle"></view>
-				<view class="title">重要但不紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':open3}"></image>
-				<view class="logo"></view>
-			</view>
-			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list3" :key="item.id">
-				<view class="r-wrap" @click="swichClick(item)">
-					<view class="r" v-if="item.state==0"></view>
-					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
+		<view :class="{'list-wrap':true,'third':true}" :style="{maxHeight:wrap[2].openHeight}">
+			<view class="wrap">
+				<view class="list-title" @click="open(2)">
+					<view class="circle"></view>
+					<view class="title">重要但不紧急</view>
+					<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':!wrap[2].isOpen}">
+					</image>
+					<view class="logo"></view>
 				</view>
-				<text class="content" @click="itemClick(item)">{{item.name}}</text>
-				<text class="time"
-					@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
-			</view>
+				<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list3" :key="item.id">
+					<view class="r-wrap" @click="swichClick(item)">
+						<view class="r" v-if="item.state==0"></view>
+						<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
+					</view>
+					<text class="content" @click="itemClick(item)">{{item.name}}</text>
+					<text class="time"
+						@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
+				</view>
 			</view>
 		</view>
-		<view :class="{'list-wrap':true,'fourth':true}"  :style="{maxHeight:openHeight4}">
-			<view class="wrap" ref="open4">
-			<view class="list-title" @click="open(4)">
-				<view class="circle"></view>
-				<view class="title">不重要不紧急</view>
-				<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':open4}"></image>
+		<view :class="{'list-wrap':true,'fourth':true}" :style="{maxHeight:wrap[3].openHeight}">
+			<view class="wrap">
+				<view class="list-title" @click="open(3)">
+					<view class="circle"></view>
+					<view class="title">不重要不紧急</view>
+					<image class="open-icon logo" src="/static/icon/up.svg" :class="{'rotating':!wrap[3].isOpen}">
+					</image>
 
-				<view class="logo"></view>
-			</view>
-			<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list4" :key="item.id">
-				<view class="r-wrap" @click="swichClick(item)">
-					<view class="r" v-if="item.state==0"></view>
-					<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
+					<view class="logo"></view>
 				</view>
-				<text class="content" @click="itemClick(item)">{{item.name}}</text>
-				<text class="time"
-					@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
-			</view>
+				<view :class="{'list-item':true,'done':item.state==1}" v-for="item in state.list4" :key="item.id">
+					<view class="r-wrap" @click="swichClick(item)">
+						<view class="r" v-if="item.state==0"></view>
+						<image src="/static/icon/yes.svg" v-else mode="widthFix" class="logo"></image>
+					</view>
+					<text class="content" @click="itemClick(item)">{{item.name}}</text>
+					<text class="time"
+						@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
+				</view>
 			</view>
 			<tab-bar :current="0" ref="tabBars" @fresh="getList"></tab-bar>
 		</view>
@@ -106,14 +111,19 @@
 		data() {
 			return {
 				state: {},
-				open1: false,
-				open2: false,
-				open3: false,
-				open4: false,
-				openHeight1: '5000rpx',
-				openHeight2: '5000rpx',
-				openHeight3: '5000rpx',
-				openHeight4: '5000rpx',
+				wrap: [{
+					isOpen: true,
+					openHeight: '5000rpx'
+				}, {
+					isOpen: true,
+					openHeight: '5000rpx'
+				}, {
+					isOpen: true,
+					openHeight: '5000rpx'
+				}, {
+					isOpen: true,
+					openHeight: '5000rpx'
+				}],
 				btnContent: "今日",
 				btnFlag: true
 			}
@@ -123,45 +133,29 @@
 			this.getList(0)
 		},
 		methods: {
-			open(e) {
-				
-				if (e == 1) {
-					let height = this.$refs.open1.$el.offsetHeight
-					if (this.open1) {
-						this.openHeight1 = height + height + 'rpx'
-						this.open1 = !this.open1
-					} else {
-						this.openHeight1 = '60rpx'
-						this.open1 = !this.open1
-					}
-				}else if (e==2){
-					let height = this.$refs.open2.$el.offsetHeight
-					if (this.open2) {
-						this.openHeight2 = height + height+ 'rpx'
-						this.open2 = !this.open2
-					} else {
-						this.openHeight2 = '60rpx'
-						this.open2 = !this.open2
-					}
-				}else if (e==3){
-					let height = this.$refs.open3.$el.offsetHeight
-					if (this.open3) {
-						this.openHeight3 = height + height + 'rpx' 
-						this.open3 = !this.open3
-					} else {
-						this.openHeight3 = '60rpx'
-						this.open3 = !this.open3
-					}
-				}else if (e==4){
-					let height = this.$refs.open4.$el.offsetHeight
-					if (this.open4) {
-						this.openHeight4 = height + height + 'rpx'
-						this.open4 = !this.open4
-					} else {
-						this.openHeight4 = '60rpx'
-						this.open4 = !this.open4
-					}
+			async open(e) {
+				const query = uni.createSelectorQuery().in(this)
+
+				function getHeight(index) {
+					return new Promise((resolve, reject) => {
+						setTimeout(() => {
+							query.selectAll('.wrap').boundingClientRect(rect => {
+								resolve(rect[index].height)
+							}).exec()
+						}, 100)
+					})
 				}
+				const height = await getHeight(e)
+				const target = this.wrap[e]
+				//?
+				target.isOpen = !target.isOpen 
+				if (target.isOpen) {
+					target.openHeight = height * 2 + 'rpx'
+				} else {
+					target.openHeight = '60rpx'
+				}
+				//?
+
 			},
 			// 发送请求
 			getList(e) {
