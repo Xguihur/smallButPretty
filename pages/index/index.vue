@@ -2,10 +2,11 @@
 	<view class="container">
 		<view class="tab-bar">
 			<view class="logo-wrap"><text>OneList</text></view>
-			<view class="search-wrap" @click="searchClick()">
-				<input type="text" placeholder="搜索计划" />
+			<view class="search-wrap">
+				<input type="text" v-model="keyWord"   placeholder="搜索计划" />
 				<image class="search logo" src="/static/icon/search.svg"></image>
 			</view>
+			<button  @click="searchClick()" >搜索</button>
 		</view>
 		<view :class="{'list-wrap':true,'first':true}" :style="{maxHeight:wrap[0].openHeight}">
 			<view class="wrap">
@@ -114,6 +115,7 @@
 		data() {
 			return {
 				state: {},
+				keyWord:null,
 				wrap: [{
 					isOpen: true,
 					openHeight: '5000rpx'
@@ -138,8 +140,10 @@
 		methods: {
 			searchClick() {
 				uni.navigateTo({
-					url: "/pages/search/search"
+					url: '/pages/search/search?keyWord='+this.keyWord
 				})
+				
+				
 			},
 			async open(e) {
 				const query = uni.createSelectorQuery().in(this)
@@ -192,8 +196,8 @@
 						}
 						let afterList = list.filter(item => {
 							return item.startTime !== item.endTime ?
-								moment().isBetween(item.startTime, item.endTime) :
-								moment().isSame(item.startTime, 'day')
+								moment().isBetween(item.startTime, item.endTime) ://开始时间不等于结束时间，
+								moment().isSame(item.startTime, 'day')//时间相等
 						})
 						afterList.forEach(item => {
 							this.state[`list${item.priority}`].push({

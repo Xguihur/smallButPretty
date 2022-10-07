@@ -36,3 +36,8 @@ export const reqAllList = () => {
 export const reqChangeList = (changeForm) => {
 	return request('/list/update', changeForm, 'put')
 }
+
+//搜索计划
+// export const reqSearchList = (keyWord) => {
+	//return request('/user/allList',keyWord,'post')
+//}
