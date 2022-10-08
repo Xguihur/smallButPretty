@@ -11,4 +11,7 @@ module.exports = {
   },
   plugins: ["vue"],
   rules: {},
+	globals:{
+		uni:true
+	}
 };

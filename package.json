@@ -1,17 +1,22 @@
 {
-	"devDependencies": {
-		"commitizen": "^4.2.5",
-		"eslint": "^8.24.0",
-		"eslint-plugin-vue": "^9.5.1"
-	},
-	"scripts": {
-		"eslint": "eslint --init",
-		"prettier": "prettier --write .",
-		"commit": "git-cz"
-	},
-	"config": {
-		"commitizen": {
-			"path": "node_modules/cz-conventional-changelog"
-		}
-	}
+  "devDependencies": {
+    "axios": "^0.27.2",
+    "commitizen": "^4.2.5",
+    "eslint": "^8.24.0",
+    "eslint-plugin-vue": "^9.5.1"
+  },
+  "scripts": {
+    "eslint": "eslint --init",
+    "prettier": "prettier --write .",
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "moment": "^2.29.4",
+    "uni-simple-router": "^1.5.5"
+  }
 }

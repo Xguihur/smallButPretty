@@ -1,27 +1,59 @@
-import axios from 'axios'
-const requests = axios.create({
+// 导入封装好的request
+import request from "./common.js"
+// return request('/user/add',registerForm,'post')  第一个参数必选（url），第二个参数可选（待传的参数）,第三个参数可选（默认get请求，可写成post）
 
-	baseURL: ''
-	// 代表请求超时的时间为5s
-	timeout: 5000
-})
+// 用户注册
+export const reqRegister = (registerForm) => {
+	return request('/user/add', registerForm, 'post')
+}
 
-// 请求拦截器：在发请求之前，请求拦截器可以检测到，可以在发请求之前做一些事情
-requests.interceptors.request.use(config => {
-	return config
-})
+// 用户登录
+export const reqLogin = (loginForm) => {
+	return request('/user/login', loginForm, 'post')
+}
 
-// 响应拦截器
-requests.interceptors.response.use(
-	res => {
-		return res
-	},
-	error => {
-		// 响应失败的回调函数
-		console.log(error)
-		return Promise.reject(new Error(error))
-	}
-)
 
-// 对外暴露
-export default requests
+// 查看个人信息
+export const reqShowMsg = () => {
+	return request('/user/myinformation')
+}
+
+
+// 修改个人信息
+export const reqModifyMsg = (modifyData) => {
+	return request('/user/update', modifyData, 'put')
+}
+
+//添加待办
+export const reqAddList = (addForm) => {
+	return request('/list/add', addForm, 'post')
+}
+//查询待办
+export const reqAllList = () => {
+	return request('/user/allList')
+}
+//修改待办
+export const reqChangeList = (changeForm) => {
+	return request('/list/update', changeForm, 'put')
+}
+
+//搜索计划
+ export const reqSearchList = (keyWord) => {
+	return request('/search',keyWord,'post')
+}
+//验证密码
+export const reqCheckPassword = (password) => {
+	return request('/user/safe', password, 'post')
+}
+
+//注销用户
+export const reqDeleteUser = (password) => {
+	return request('/user/delete', password, 'DELETE')
+	
+}
+
+//获取临时凭证
+export const getSts = (password) => {
+	return request('/sts')
+
+}
