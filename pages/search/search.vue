@@ -1,7 +1,7 @@
 <template>
 	<view>
 	
-		<view class=""  v-show="!searchValue">暂无{{keyWord}}相关信息</view>
+		<view class="noSearch"  v-show="!searchValue">暂无{{keyWord}}相关信息~~~</view>
 		<view class="searchContent" v-show="searchValue">
 		<view :class="{'list-wrap':true,'first':true}" :style="{maxHeight:wrap[0].openHeight}">
 			<view class="wrap">
@@ -365,6 +365,19 @@
 </script>
 
 <style lang="less">
+	/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+	/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+	/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "思源宋体 CN VF Regular";
+  src: url("http://at.alicdn.com/wf/webfont/2yVqlMUfhhLw/BbNZ-140M9NLcyBeDtn4e.woff2") format("woff2"),
+  url("http://at.alicdn.com/wf/webfont/2yVqlMUfhhLw/1YKpXioS6un8QSBQUONZm.woff") format("woff");
+  font-display: swap;
+}
+	.noSearch{
+		font-family: "思源宋体 CN VF Regular" ;
+		font-size: 60rpx;
+		 }
 	.container {
 		padding: 40rpx;
 		font-size: 28rpx;
