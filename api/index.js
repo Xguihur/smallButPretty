@@ -41,7 +41,6 @@ export const reqChangeList = (changeForm) => {
  export const reqSearchList = (keyWord) => {
 	return request('/search',keyWord,'post')
 }
-
 //验证密码
 export const reqCheckPassword = (password) => {
 	return request('/user/safe', password, 'post')

@@ -181,7 +181,7 @@
 							list3: [],
 							list4: []
 						}
-						list.forEach((item) => {
+						list&&list.forEach((item) => {
 							this.state[`list${item.priority}`].push({
 								...item,
 								showStartTime: moment(item.startTime).format('HH:mm'),
@@ -198,12 +198,12 @@
 							list3: [],
 							list4: []
 						}
-						let afterList = list.filter(item => {
+						let afterList = list&&list.filter(item => {
 							return item.startTime !== item.endTime ?
 								moment().isBetween(item.startTime, item.endTime) ://开始时间不等于结束时间，
 								moment().isSame(item.startTime, 'day')//时间相等
 						})
-						afterList.forEach(item => {
+						afterList&&afterList.forEach(item => {
 							this.state[`list${item.priority}`].push({
 								...item,
 								showStartTime: moment(item.startTime).format('HH:mm'),
@@ -303,6 +303,11 @@
 		margin-left: 12rpx;
 		margin-top: -2rpx;
 		font-size: 28rpx;
+		border-radius: 12rpx;
+		line-height: 65rpx;
+		color: #fff;
+		height: 65rpx;
+		background-color: #2643fc;
 	}
 	.container {
 		padding: 40rpx;
