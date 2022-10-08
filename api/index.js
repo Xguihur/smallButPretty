@@ -40,7 +40,7 @@ export const reqChangeList = (changeForm) => {
 //搜索计划
  export const reqSearchList = (keyWord) => {
 	return request('/search',keyWord,'post')
-
+}
 //验证密码
 export const reqCheckPassword = (password) => {
 	return request('/user/safe', password, 'post')
@@ -49,5 +49,5 @@ export const reqCheckPassword = (password) => {
 //注销用户
 export const reqDeleteUser = (password) => {
 	return request('/user/delete', password, 'DELETE')
-
+	
 }
