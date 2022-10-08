@@ -4,9 +4,9 @@
 			<text>One</text>
 			<text>List</text>
 		</view>
-		<view class="lg-state">新一代简介清单软件</view>
+		<view class="lg-state">新一代简洁清单软件</view>
 		<!-- 注册 -->
-		<view class="lg-input" v-if="regOrSign === 0">
+		<view class="lg-input" v-show="regOrSign === 0">
 			<view class="lg-input-box">
 				<image
 					class="lg-input-logo"
@@ -39,7 +39,7 @@
 			</view>
 		</view>
 		<!-- 登录 -->
-		<view class="lg-input" v-if="regOrSign === 1">
+		<view class="lg-input" v-show="regOrSign === 1">
 			<view class="lg-input-box">
 				<image
 					class="lg-input-logo"

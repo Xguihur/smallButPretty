@@ -118,16 +118,16 @@
 				keyWord:null,
 				wrap: [{
 					isOpen: true,
-					openHeight: '5000rpx'
+					openHeight: '30000rpx'
 				}, {
 					isOpen: true,
-					openHeight: '5000rpx'
+					openHeight: '30000rpx'
 				}, {
 					isOpen: true,
-					openHeight: '5000rpx'
+					openHeight: '30000rpx'
 				}, {
 					isOpen: true,
-					openHeight: '5000rpx'
+					openHeight: '30000rpx'
 				}],
 				btnContent: "今日",
 				btnFlag: true
@@ -168,6 +168,10 @@
 			},
 			// 发送请求
 			getList(e) {
+				this.wrap.forEach(item=>{
+					item.isOpen = true
+					item.openHeight= '30000rpx'
+				})
 				if (e == 1) {
 					reqAllList().then(res => {
 						let list = res.data.lists
@@ -212,6 +216,10 @@
 			itemClick(item) {
 				if (item.state == 0) {
 					this.$refs.tabBars.addList(item)
+					this.wrap.forEach(item=>{
+						item.isOpen = true
+						item.openHeight= '30000rpx'
+					})
 				} else {
 					return
 				}
@@ -264,7 +272,11 @@
 					state
 				}
 				reqChangeList(changeForm).then(() => {
-					this.getList()
+					if (this.btnFlag) {
+					      this.getList(0)
+					     } else {
+					      this.getList(1)
+					     }
 				})
 			},
 			btnClick() {
@@ -277,6 +289,10 @@
 					this.btnContent = '今日'
 					this.btnFlag = true
 				}
+				this.wrap.forEach(item=>{
+					item.isOpen = true
+					item.openHeight= '30000rpx'
+				})
 			},
 		}
 	}
