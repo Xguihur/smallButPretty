@@ -51,3 +51,9 @@ export const reqDeleteUser = (password) => {
 	return request('/user/delete', password, 'DELETE')
 
 }
+
+//获取临时凭证
+export const getSts = (password) => {
+	return request('/sts')
+
+}

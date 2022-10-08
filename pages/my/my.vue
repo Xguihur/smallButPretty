@@ -178,7 +178,6 @@
 				></uni-popup-dialog>
 			</uni-popup>
 		</view>
-
 		<button type="warn" @click="signOut()">退出登录</button>
 		<tab-bar :current="1"></tab-bar>
 	</view>
@@ -192,10 +191,13 @@ import {
 	reqCheckPassword
 } from '../../api/index.js'
 import tabBar from '../../component/tabBar.vue'
+
+import { uploadFile } from '../../utils/sts.js'
 export default {
 	data() {
 		return {
 			nickName: '用户名',
+			username:'',
 			motto: '这个人很懒啥也不写...',
 			newPassword: '',
 			img: ''
@@ -212,6 +214,8 @@ export default {
 					if (res.data.state) {
 						this.nickName = res.data.user.nickname
 						this.motto = res.data.user.intro
+						this.username=res.data.user.username
+						this.img=uni.getStorageSync('img')||res.data.user.img
 					}
 				}
 			})
@@ -240,19 +244,29 @@ export default {
 				}
 			})
 		},
-
-		// 更换头像
-		changeImg() {
+		// 注销用户
+		async changeImg() {
 			console.log('更换头像')
-			// 选择本地相册
+			const that = this
 			uni.chooseImage({
 				count: 1, //默认9
 				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 				sourceType: ['album'], //从相册选择
-				success: function(res) {
-					// 成功后将数据发送到后台完成上传
-					console.log(JSON.stringify(res.tempFilePaths))
-					console.log(res.tempFilePaths)
+				success: function(file) {
+					const fileTypeArr = file.tempFiles[0].path.split('/')
+					const fileType = fileTypeArr[fileTypeArr.length - 1].split('.')[1]
+					console.log(file.tempFiles[0])
+					console.log(fileType)
+					uploadFile({
+						host: 'https://p-onelist.oss-cn-hangzhou.aliyuncs.com/', // 阿里云地址
+						folder: `avatar/${that.username}${Date.now()}.${fileType}`, // 阿里云存放文件夹
+						filePath: file.tempFilePaths[0]
+					}).then(res=>{
+						console.log('oss返回连接：',res.url)
+						reqModifyMsg({img:res.url})//修改 api
+						uni.setStorageSync('img',res.url)
+						that.img=res.url
+					})
 				}
 			})
 		},
