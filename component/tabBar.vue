@@ -24,8 +24,8 @@
 		<uni-popup ref="addList" type="bottom" mask-background-color="rgba(0,0,0,0)" v-show="!showPicker">
 			<view class="add-wrap">
 				<button size="mini" type="default" @click="submit">发布</button>
-				<input type="text" placeholder="准备做什么?" v-model="form.name" />
-				<textarea name="" id="" placeholder="描述一下吧!" v-model="form.description"></textarea>
+				<input type="text" placeholder="准备做什么?" v-model="form.name" maxlength="15"/>
+				<textarea name="" id="" placeholder="描述一下吧!" v-model="form.description"  maxlength="200"></textarea>
 				<view class="option-wrap">
 					<view class="item-calendar" @click="calendarClick(0)">
 						<picker class="wrap" mode="time" value="" @change="canlendarStarChange"
@@ -55,8 +55,8 @@
 		<uni-popup ref="changeList" type="bottom" mask-background-color="rgba(0,0,0,0)" v-show="!showPicker">
 			<view class="add-wrap">
 				<button size="mini" type="default" @click="change">修改</button>
-				<input type="text" placeholder="准备做什么?" v-model="changeForm.name" />
-				<textarea name="" id="" placeholder="描述一下吧!" v-model="changeForm.description"></textarea>
+				<input type="text" placeholder="准备做什么?" v-model="changeForm.name" maxlength="15"/>
+				<textarea name="" id="" placeholder="描述一下吧!" v-model="changeForm.description" maxlength="200"></textarea>
 				<view class="option-wrap">
 					<view class="item-calendar" @click="calendarClick(2)">
 						<picker class="wrap" mode="time" value="" @change="changeCanlendarStarChange"
@@ -194,7 +194,6 @@
 					this.$refs.addList.open()
 					this.form.startTime = moment().format('YYYY-MM-DD HH:mm:ss');
 					this.form.endTime = this.form.startTime
-					console.log(this.form.startTime);
 
 				} else {
 					this.$refs.changeList.open()
@@ -316,15 +315,9 @@
 						icon: "error"
 					});
 					return
-				} else if (!startTime) {
+				} else if (moment(startTime).isAfter(endTime)) {
 					uni.showToast({
-						title: '请选择开始时间',
-						icon: "error"
-					});
-					return
-				} else if (!endTime) {
-					uni.showToast({
-						title: '请选择结束时间',
+						title: '请选择正确的时间',
 						icon: "error"
 					});
 					return
@@ -371,15 +364,9 @@
 						icon: "error"
 					});
 					return
-				} else if (!startTime) {
+				} else if (moment(startTime).isAfter(endTime)) {
 					uni.showToast({
-						title: '请选择开始时间',
-						icon: "error"
-					});
-					return
-				} else if (!endTime) {
-					uni.showToast({
-						title: '请选择结束时间',
+						title: '请选择正确的时间',
 						icon: "error"
 					});
 					return
@@ -544,9 +531,11 @@
 
 		.option-wrap {
 			position: relative;
-			width: 100%;
+			width: 95%;
 			height: 60rpx;
 			font-size: 24rpx;
+			margin: 0rpx auto;
+			padding-bottom: 30rpx;
 			text-align: center;
 			line-height: 50rpx;
 			display: flex;
@@ -554,13 +543,13 @@
 			.item-calendar {
 				position: relative;
 				flex: 2;
-				width: 40%;
+				width: 60%;
 
 				.wrap {
 					display: flex;
 					background-color: #efefef;
-					width: 70%;
-					height: 45rpx;
+					width: 80%;
+					height: 50rpx;
 					margin: 0 auto;
 					justify-content: center;
 					border-radius: 10rpx;
@@ -580,8 +569,8 @@
 				.wrap {
 					display: flex;
 					background-color: #efefef;
-					width: 70%;
-					height: 45rpx;
+					width: 80%;
+					height: 50rpx;
 					margin: 0 auto;
 					justify-content: center;
 					border-radius: 10rpx;
