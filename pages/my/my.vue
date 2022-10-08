@@ -1,7 +1,7 @@
 <template>
 	<view class="my-container">
 		<view class="my-top">
-			<image src="../../static/logo.png" mode="widthFix" class="my-img"></image>
+			<image :src="img||'../../static/logo.png'" mode="widthFix" class="my-img"></image>
 			<view class="my-text-box">
 				<view class="my-name">{{ nickName }}</view>
 				<view class="my-motto">{{ motto }}</view>
@@ -73,6 +73,16 @@
 					<view class="my-text-content">修改密码</view>
 				</view>
 			</view>
+			<uni-popup ref="inputDialogPasswordCheck" type="dialog">
+				<uni-popup-dialog
+					ref="inputClose"
+					mode="input"
+					title="验证密码"
+					value=""
+					placeholder="请输入您的密码"
+					@confirm="dialogInputPasswordConfirmCheck"
+				></uni-popup-dialog>
+			</uni-popup>
 			<uni-popup ref="inputDialogPassword" type="dialog">
 				<uni-popup-dialog
 					ref="inputClose"
@@ -141,13 +151,13 @@
 					</view>
 				</view>
 			</uni-popup>
-			
+
 			<!-- 注销用户 -->
 			<view class="my-func-item" @click="deleteUser()">
 				<view class="my-item-content">
 					<image
 						class="my-title-img"
-						src="../../static/icon/rename.svg"
+						src="../../static/icon/switch.svg"
 						mode="widthFix"
 					></image>
 					<view class="my-text-content">注销用户</view>
@@ -171,29 +181,29 @@
 </template>
 
 <script>
-import { reqShowMsg, reqModifyMsg } from '../../api/index.js'
+import { reqShowMsg, reqModifyMsg, reqCheckPassword } from '../../api/index.js'
 import tabBar from '../../component/tabBar.vue'
 export default {
 	data() {
 		return {
 			nickName: '用户名',
 			motto: '这个人很懒啥也不写...',
-			newPassword:''
+			newPassword: '',
+			img:''
 		}
 	},
 	components: {
 		tabBar
 	},
 	methods: {
-		initPersonMsg(){
+		initPersonMsg() {
 			// 初始化用户名和签名
-			reqShowMsg().then(res=>{
+			reqShowMsg().then(res => {
 				console.log(res)
-				if(res&&res.statusCode === 200){
-					if(res.data.state){
-						
-				this.nickName = res.data.user.nickname
-				this.motto = res.data.user.intro
+				if (res && res.statusCode === 200) {
+					if (res.data.state) {
+						this.nickName = res.data.user.nickname
+						this.motto = res.data.user.intro
 					}
 				}
 			})
@@ -244,6 +254,31 @@ export default {
 		},
 		inputDialogDeleteConfirm(val) {
 			console.log(val)
+			// 执行密码验证进行比对
+			const password = {
+				password:val
+			}
+			reqCheckPassword(password).then(res=>{
+				// console.log(res)
+				if(res){
+					if(res.data.state){
+						
+					}
+					else{
+						uni.showToast({
+							icon: 'error',
+							title: '密码错误！'
+						})
+					}
+				}
+				else{
+					uni.showToast({
+						icon: 'error',
+						title: '请求失败！'
+					})
+					console.log(res)
+				}
+			})
 		},
 		// 修改用户名
 		changeUsername() {
@@ -252,6 +287,13 @@ export default {
 		},
 		dialogInputUsernameConfirm(val) {
 			console.log(val)
+			if (val.length > 10) {
+				uni.showToast({
+					icon: 'error',
+					title: '最大长度为10'
+				})
+				return
+			}
 			const modifyData = {
 				nickname: val
 			}
@@ -275,42 +317,64 @@ export default {
 			})
 		},
 
-		// 修改密码
+		// 验证密码
 		changePassword() {
-			console.log('修改密码')
-			this.$refs.inputDialogPassword.open()
+			console.log('验证密码')
+			this.$refs.inputDialogPasswordCheck.open()
+		},
+		dialogInputPasswordConfirmCheck(val) {
+			console.log(val)
+			// 执行密码验证进行比对
+			const password = {
+				password:val
+			}
+			reqCheckPassword(password).then(res=>{
+				// console.log(res)
+				if(res){
+					if(res.data.state){
+						this.$refs.inputDialogPassword.open()
+					}
+					else{
+						uni.showToast({
+							icon: 'error',
+							title: '密码错误！'
+						})
+					}
+				}
+				else{
+					uni.showToast({
+						icon: 'error',
+						title: '请求失败！'
+					})
+					console.log(res)
+				}
+			})
+			
 		},
 		dialogInputPasswordConfirm(val) {
 			console.log(val)
-			if(val===''||val===null){
+			if (val === '' || val === null) {
 				// 密码输入错误
 				uni.showToast({
-					icon:"error",
-					title:"密码不能为空！"
+					icon: 'error',
+					title: '密码不能为空！'
 				})
-			}else{
+			} else {
 				// 将第一次输入的密码存入data
 				this.newPassword = val
 				// 确认密码 弹出输入框
-										this.$refs.inputDialogPasswordTwo.open()
+				this.$refs.inputDialogPasswordTwo.open()
 			}
 		},
 		dialogInputPasswordTwoConfirm(val) {
 			console.log(val)
-			if(val===''||val===null){
-				// 密码输入错误
-				uni.showToast({
-					icon:"error",
-					title:"密码不能为空！"
-				})
-			}
-			else if(val === this.newPassword){
+			if (val === this.newPassword) {
 				// 两次密码正确,调用后端接口修改密码
 				const modifyData = {
 					password: val
 				}
 				console.log(modifyData)
-						
+
 				reqModifyMsg(modifyData).then(res => {
 					console.log(res)
 					if (res.data.state === true) {
@@ -336,16 +400,16 @@ export default {
 						})
 					}
 				})
-			}else{
+			} else {
 				// 密码输入错误
 				uni.showToast({
-					icon:"error",
-					title:"两次密码不一致！"
+					icon: 'error',
+					title: '两次密码不一致！'
 				})
 			}
 		},
 		// 第二次输入密码时点击取消的状态
-		watchPasswordState(){
+		watchPasswordState() {
 			// 用户点击取消清空当前data中的新密码
 			this.newPassword = ''
 		},
@@ -401,7 +465,7 @@ export default {
 			console.log('当前模式：' + e.type + ',状态：' + e.show)
 		}
 	},
-	onShow(){
+	onShow() {
 		this.initPersonMsg()
 	}
 }

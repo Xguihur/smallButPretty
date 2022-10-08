@@ -36,3 +36,13 @@ export const reqAllList = () => {
 export const reqChangeList = (changeForm) => {
 	return request('/list/update', changeForm, 'put')
 }
+
+//验证密码
+export const reqCheckPassword = (password) => {
+	return request('/user/safe', password, 'post')
+}
+
+//注销用户
+export const reqDeleteUser = (password) => {
+	return request('/user/delete', password, 'DELETE')
+}
