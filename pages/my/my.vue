@@ -1,7 +1,11 @@
 <template>
 	<view class="my-container">
 		<view class="my-top">
-			<image :src="img||'../../static/logo.png'" mode="widthFix" class="my-img"></image>
+			<image
+				:src="img || '../../static/logo.png'"
+				mode="widthFix"
+				class="my-img"
+			></image>
 			<view class="my-text-box">
 				<view class="my-name">{{ nickName }}</view>
 				<view class="my-motto">{{ motto }}</view>
@@ -181,7 +185,12 @@
 </template>
 
 <script>
-import { reqShowMsg, reqModifyMsg, reqCheckPassword } from '../../api/index.js'
+import {
+	reqShowMsg,
+	reqDeleteUser,
+	reqModifyMsg,
+	reqCheckPassword
+} from '../../api/index.js'
 import tabBar from '../../component/tabBar.vue'
 export default {
 	data() {
@@ -189,7 +198,7 @@ export default {
 			nickName: '用户名',
 			motto: '这个人很懒啥也不写...',
 			newPassword: '',
-			img:''
+			img: ''
 		}
 	},
 	components: {
@@ -256,22 +265,47 @@ export default {
 			console.log(val)
 			// 执行密码验证进行比对
 			const password = {
-				password:val
+				password: val
 			}
-			reqCheckPassword(password).then(res=>{
+			reqCheckPassword(password).then(res => {
 				// console.log(res)
-				if(res){
-					if(res.data.state){
-						
-					}
-					else{
+				if (res) {
+					if (res.data.state) {
+						reqDeleteUser().then(res => {
+							console.log(res)
+							if (res) {
+								if (res.data.state) {
+									uni.showToast({
+										icon: 'success',
+										title: res.data.msg
+									})
+									uni.setStorageSync('token', '')
+									setTimeout(() => {
+										uni.navigateTo({
+											url: '/pages/login/login'
+										})
+									}, 800)
+								} else {
+									uni.showToast({
+										icon: 'error',
+										title: res.data.msg
+									})
+								}
+							} else {
+								console.log(res)
+								uni.showToast({
+									icon: 'error',
+									title: '请求失败！'
+								})
+							}
+						})
+					} else {
 						uni.showToast({
 							icon: 'error',
 							title: '密码错误！'
 						})
 					}
-				}
-				else{
+				} else {
 					uni.showToast({
 						icon: 'error',
 						title: '请求失败！'
@@ -326,22 +360,20 @@ export default {
 			console.log(val)
 			// 执行密码验证进行比对
 			const password = {
-				password:val
+				password: val
 			}
-			reqCheckPassword(password).then(res=>{
+			reqCheckPassword(password).then(res => {
 				// console.log(res)
-				if(res){
-					if(res.data.state){
+				if (res) {
+					if (res.data.state) {
 						this.$refs.inputDialogPassword.open()
-					}
-					else{
+					} else {
 						uni.showToast({
 							icon: 'error',
 							title: '密码错误！'
 						})
 					}
-				}
-				else{
+				} else {
 					uni.showToast({
 						icon: 'error',
 						title: '请求失败！'
@@ -349,7 +381,6 @@ export default {
 					console.log(res)
 				}
 			})
-			
 		},
 		dialogInputPasswordConfirm(val) {
 			console.log(val)
