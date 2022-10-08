@@ -260,7 +260,11 @@
 					state
 				}
 				reqChangeList(changeForm).then(() => {
-					this.getList()
+					if (this.btnFlag) {
+					      this.getList(0)
+					     } else {
+					      this.getList(1)
+					     }
 				})
 			},
 			btnClick() {
