@@ -253,6 +253,7 @@ export default {
 				success: function(res) {
 					// 成功后将数据发送到后台完成上传
 					console.log(JSON.stringify(res.tempFilePaths))
+					console.log(res.tempFilePaths)
 				}
 			})
 		},

@@ -40,6 +40,7 @@ export const reqChangeList = (changeForm) => {
 //搜索计划
  export const reqSearchList = (keyWord) => {
 	return request('/search',keyWord,'post')
+}
 
 //验证密码
 export const reqCheckPassword = (password) => {
