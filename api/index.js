@@ -49,7 +49,7 @@ export const reqCheckPassword = (password) => {
 //注销用户
 export const reqDeleteUser = (password) => {
 	return request('/user/delete', password, 'DELETE')
-
+	
 }
 
 //获取临时凭证
