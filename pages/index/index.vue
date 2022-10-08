@@ -6,7 +6,7 @@
 				<input type="text" v-model="keyWord"   placeholder="搜索计划" />
 				<image class="search logo" src="/static/icon/search.svg"></image>
 			</view>
-			<button  @click="searchClick()" >搜索</button>
+			<button  @click="searchClick()"  class="searchCss">搜索</button>
 		</view>
 		<view :class="{'list-wrap':true,'first':true}" :style="{maxHeight:wrap[0].openHeight}">
 			<view class="wrap">
@@ -283,6 +283,11 @@
 </script>
 
 <style lang="less">
+	.searchCss{
+		margin-left: 12rpx;
+		margin-top: -2rpx;
+		font-size: 28rpx;
+	}
 	.container {
 		padding: 40rpx;
 		font-size: 28rpx;

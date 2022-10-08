@@ -1,8 +1,7 @@
 <template>
 	<view>
-		这是搜索页面<br/>
-		{{keyWord}}<br/>
-		<view class=""  v-show="!searchValue">暂无搜索结果</view>
+	
+		<view class=""  v-show="!searchValue">暂无{{keyWord}}相关信息</view>
 		<view class="searchContent" v-show="searchValue">
 		<view :class="{'list-wrap':true,'first':true}" :style="{maxHeight:wrap[0].openHeight}">
 			<view class="wrap">
@@ -39,11 +38,8 @@
 					</text>
 					
 					
-				</view>
-				
-				
-				
-				
+				</view>			
+								
 				
 			</view>
 		</view>
@@ -110,7 +106,7 @@
 							@click="itemClick(item)">{{item.startTime===item.endTime?item.showStartTime:`${item.showStartTime}~${item.showEndTime}`}}</text>
 					</view>
 				</view>
-				<tab-bar :current="0" ref="tabBars" @fresh="getList"></tab-bar>
+				<tab-bar :current="0" ref="tabBars" @fresh="getSearchList"></tab-bar>
 			</view>
 				<view class="btn" @click="btnClick()">{{ btnContent }}</view>
 	</view>	
@@ -127,11 +123,14 @@
 	import {
 		reqAllList
 	} from "../../api/index.js"
+	import {
+		reqSearchList
+	} from "../../api/index.js"
 	export default {
 		//此处确定将搜素结果页做成非tabBar
 		data() {
 			return {
-				searchValue:1,
+				searchValue:null,
 				state: {},
 				keyWord:null,
 				wrap: [{
@@ -152,11 +151,19 @@
 			}
 		},
 		onLoad(value) {
+			
 		this.keyWord=value.keyWord
+		let keyWord = {}
+		keyWord.keyWord =value.keyWord
+		console.log(keyWord)
+		 
+		this.getSearchList(0,keyWord)
+		console.log("getSearchList调用完成后")
+		console.log(this.keyWord)
 		   },
 		mounted() {},
 		onShow() {
-			this.getList(0)
+		
 		},
 		methods: {
 		        async open(e) {
@@ -181,12 +188,62 @@
 		        	}
 		        },
 		        // 发送请求
-		        getList(e) {
+				getList(e) {
+					if (e == 1) {
+						reqAllList().then(res => {
+							let list = res.data.lists
+							this.state = {
+								list1: [],
+								list2: [],
+								list3: [],
+								list4: []
+							}
+							list.forEach((item) => {
+								this.state[`list${item.priority}`].push({
+									...item,
+									showStartTime: moment(item.startTime).format('HH:mm'),
+									showEndTime: moment(item.endTime).format('HH:mm')
+								})
+							})
+						})
+					} else {
+						reqAllList().then(res => {
+							let list = res.data.lists
+							this.state = {
+								list1: [],
+								list2: [],
+								list3: [],
+								list4: []
+							}
+							let afterList = list.filter(item => {
+								return item.startTime !== item.endTime ?
+									moment().isBetween(item.startTime, item.endTime) ://开始时间不等于结束时间，
+									moment().isSame(item.startTime, 'day')//时间相等
+							})
+							afterList.forEach(item => {
+								this.state[`list${item.priority}`].push({
+									...item,
+									showStartTime: moment(item.startTime).format('HH:mm'),
+									showEndTime: moment(item.endTime).format('HH:mm')
+								})
+							})
+						})
+					}
+				},	
+				//得到searchlist
+		        getSearchList(e,keyWord) {
+					console.log('getSearchList开始执行')
+					const that=this
 		        	if (e == 1) {
 	
-		        		reqAllList().then(res => {
-							
-		        			let list = res.data.lists
+		        		reqSearchList(keyWord).then(res => {
+							console.log(res)
+							that.searchValue=res.data.searchValue
+							console.log(res.data.searchValue)
+							console.log(res.data.list)
+							console.log('xiamia')
+		        			let list = res.data.list
+							console.log(list)
 		        			this.state = {
 		        				list1: [],
 		        				list2: [],
@@ -201,15 +258,21 @@
 		        				})
 		        			})
 		        		})
-		        	} else {
-		        		reqAllList().then(res => {
-		        			let list = res.data.lists
-		        			this.state = {
-		        				list1: [],
-		        				list2: [],
-		        				list3: [],
-		        				list4: []
-		        			}
+		        	} else if(e==0) {
+		        		reqSearchList(keyWord).then(res => {
+							console.log(res)
+							that.searchValue=res.data.searchValue
+							console.log(res.data.searchValue)
+							console.log(res.data.list)
+							console.log('xiamia')
+							let list = res.data.list
+							console.log(list)
+							this.state = {
+								list1: [],
+								list2: [],
+								list3: [],
+								list4: []
+							}
 		        			let afterList = list.filter(item => {
 		        				return item.startTime !== item.endTime ?
 		        					moment().isBetween(item.startTime, item.endTime) :
@@ -284,12 +347,14 @@
 		        	})
 		        },
 		       btnClick() {
+				   let keyWord = {}
+				   keyWord.keyWord =this.keyWord
 		       	if (this.btnFlag) {
-		       		this.getList(1)
+		       		this.getList(1,keyWord)
 		       		this.btnContent = '全部'
 		       		this.btnFlag = false
 		       	} else {
-		       		this.getList(0)
+		       		this.getList(0,keyWord)
 		       		this.btnContent = '今日'
 		       		this.btnFlag = true
 		       	}
@@ -300,9 +365,6 @@
 </script>
 
 <style lang="less">
-	.searchContent{
-		background-color:#57ad59;
-	}
 	.container {
 		padding: 40rpx;
 		font-size: 28rpx;

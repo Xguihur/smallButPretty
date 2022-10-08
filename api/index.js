@@ -38,6 +38,6 @@ export const reqChangeList = (changeForm) => {
 }
 
 //搜索计划
-// export const reqSearchList = (keyWord) => {
-	//return request('/user/allList',keyWord,'post')
-//}
+ export const reqSearchList = (keyWord) => {
+	return request('/search',keyWord,'post')
+}
