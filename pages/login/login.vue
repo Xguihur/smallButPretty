@@ -123,11 +123,9 @@ export default {
 			if (this.regOrSign === 1) {
 				this.regOrSign = 0
 			} else {
-				console.log('注册')
 				let registerForm = {}
 				registerForm.username = this.number
 				registerForm.password = this.password
-				console.log(registerForm)
 				// 执行接口
 				reqRegister(registerForm).then(res => {
 						if (res) {
@@ -169,14 +167,12 @@ export default {
 				let loginForm = {}
 				loginForm.username = this.number
 				loginForm.password = this.password
-				console.log(loginForm)
 				// 执行接口
 				reqLogin(loginForm).then(res=>{
 						if (res) {
 							console.log(res)
 							if (res.statusCode === 200) {
 								let token = res.data.token
-								console.log(token)
 								if (token !== '' && token !== null && token !== undefined) {
 									uni.setStorageSync('token', token)
 									uni.showToast({

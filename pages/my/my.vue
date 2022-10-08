@@ -208,7 +208,6 @@ export default {
 		initPersonMsg() {
 			// 初始化用户名和签名
 			reqShowMsg().then(res => {
-				console.log(res)
 				if (res && res.statusCode === 200) {
 					if (res.data.state) {
 						this.nickName = res.data.user.nickname
@@ -268,7 +267,6 @@ export default {
 				password: val
 			}
 			reqCheckPassword(password).then(res => {
-				// console.log(res)
 				if (res) {
 					if (res.data.state) {
 						reqDeleteUser().then(res => {
@@ -320,7 +318,6 @@ export default {
 			this.$refs.inputDialogUsername.open()
 		},
 		dialogInputUsernameConfirm(val) {
-			console.log(val)
 			if (val.length > 10) {
 				uni.showToast({
 					icon: 'error',
@@ -331,8 +328,6 @@ export default {
 			const modifyData = {
 				nickname: val
 			}
-			console.log(modifyData)
-
 			reqModifyMsg(modifyData).then(res => {
 				console.log(res)
 				if (res.data.state === true) {
@@ -378,7 +373,6 @@ export default {
 						icon: 'error',
 						title: '请求失败！'
 					})
-					console.log(res)
 				}
 			})
 		},
@@ -407,7 +401,6 @@ export default {
 				console.log(modifyData)
 
 				reqModifyMsg(modifyData).then(res => {
-					console.log(res)
 					if (res.data.state === true) {
 						uni.showToast({
 							icon: 'success',
