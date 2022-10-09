@@ -59,6 +59,6 @@
             "urlCheck" : false
         },
         "usingComponents" : true,
-				"lazyCodeLoading": "requiredComponents"
+        "lazyCodeLoading" : "requiredComponents"
     }
 }
