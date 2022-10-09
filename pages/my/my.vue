@@ -126,7 +126,7 @@
 				<view class="popup-content">
 					<view class="my-popup-title">使用指南</view>
 					<view class="my-popup-text">
-						使用指南的指南只是用于使用的指南，但是使用指南的指南只是用于使用的指南，不只是指南的使用还是指南使用的使用指南。
+						一个清单 是一款简洁清单软件，您只需要在清单页面发布自己即将完成的任务，并且选择事件紧急程度即可发布并且展示在页面上！
 					</view>
 				</view>
 			</uni-popup>
@@ -151,7 +151,7 @@
 				<view class="popup-content">
 					<view class="my-popup-title">关于我们</view>
 					<view class="my-popup-text">
-						关于我们的关于我们，但是关于我们的关于我们不是我们的关于我们。
+						一个清单是一款" 简洁清单项目 "，帮你高效完成任务和规划时间的应用，合理安排一天中的任务安排。如需要联系我们请发送邮件至：329179227@qq.com!
 					</view>
 				</view>
 			</uni-popup>
